@@ -1,12 +1,21 @@
-'use strict';
+const gameManager = require('./GameManager.js')(),
+    Express = require('express'),
+    ExpressWs = require('express-ws');
 
-const express = require('express'),
-    app = express(),
-    webport = 7654;
+const WEBPORT = 7654;
 
-const Game = require('./Game.js');
+const app = Express();
 
-app.use(express.json());
+ExpressWs(app);
+
+app.ws('/ws', (ws, req) => {
+    ws.on('message', msg => {
+        gameManager.get;
+        ws.send(msg);
+    });
+});
+
+app.use(Express.json());
 
 // app.post('/write', async (req, res) => {
 //     try {
@@ -16,10 +25,10 @@ app.use(express.json());
 //     res.send();
 // });
 
-app.use(express.static('../webapp'));
+app.use(Express.static('../webapp'));
 
-app.listen(webport, () => {
-    console.log(`Tetonor listening on port ${webport}!`);
+app.listen(WEBPORT, () => {
+    console.log(`Tetonor listening on port ${WEBPORT}!`);
     const opn = require('opn');
-    opn(`http://localhost:${webport}`);
+    opn(`http://localhost:${WEBPORT}`);
 });
