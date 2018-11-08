@@ -1,0 +1,25 @@
+{
+    "name": "Tetonor-server",
+    "version": "0.0.0",
+    "description": "Tetonor server",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/claudiosousa/tetonor.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/claudiosousa/tetonor/issues"
+    },
+    "homepage": "https://github.com/claudiosousa/tetonor/#readme",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "cors": "^2.8.4",
+        "express": "^4.16.4",
+        "opn": "^5.4.0"
+    }
+}

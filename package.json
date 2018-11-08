@@ -1,0 +1,45 @@
+{
+    "name": "Tetonor",
+    "version": "0.0.0",
+    "description": "Multi-player web-based math game",
+    "scripts": {
+        "postinstall": "cd src/webapp && npm i && cd ../server && npm i",
+        "start": "cd src/server && npm start",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "prettify": "node_modules/prettier/bin-prettier.js  \"**/*.{js,json,scss}\" --write"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "lint-staged"
+        }
+    },
+    "lint-staged": {
+        "*.{json,scss,md}": [
+            "node_modules/prettier/bin-prettier.js --write",
+            "git add"
+        ],
+        "*.js": [
+            "node_modules/prettier/bin-prettier.js --write",
+            "node_modules/eslint/bin/eslint.js --fix",
+            "git add"
+        ]
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/claudiosousa/tetonor.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/claudiosousa/tetonor/issues"
+    },
+    "homepage": "https://github.com/claudiosousa/tetonor/#readme",
+    "dependencies": {
+        "eslint": "^5.7.0",
+        "eslint-config-prettier": "^3.1.0",
+        "eslint-plugin-prettier": "^3.0.0",
+        "husky": "^1.1.2",
+        "lint-staged": "^7.3.0",
+        "prettier": "^1.14.3"
+    }
+}
