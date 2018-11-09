@@ -7,17 +7,13 @@ class CommunicationService {
     }
 
     onopen() {
-        this.ws.send('Message to send');
-    }
-
-    onopen() {
-        this.ws.send('Message to send');
+        this.ws.send('getstatus');
     }
 
     onMessage(evt) {
         const msg = evt.data;
 
-        alert('Message is received...' + received_msg);
+        alert('Message is received...' + msg);
     }
 
     onclose() {}
