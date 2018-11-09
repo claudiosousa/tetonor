@@ -14,6 +14,7 @@ class Game {
         if (this.players.length == 2) {
             this.status = GameStatus.playing;
         }
+        return this.getStatus();
     }
 
     deletePlayer(player) {
@@ -23,10 +24,11 @@ class Game {
         }
     }
 
-    getStatus() {
+    getStatus(player) {
         return {
             status: this.status,
-            players: this.players
+            players: this.players.length,
+            joined: this.players.some(p => p == player)
         };
     }
 }

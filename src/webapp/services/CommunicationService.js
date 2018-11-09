@@ -1,9 +1,13 @@
+import NanoEvents from '../node_modules/nanoevents/index.js';
+
 class CommunicationService {
     constructor() {
         this.ws = new WebSocket(`ws://${location.host}/ws`);
         this.ws.onopen = () => this.onopen();
         this.ws.onmessage = evt => this.onMessage(evt);
         this.ws.onclose = () => this.onclose();
+        debugger;
+        this.emitter = new NanoEvents();
     }
 
     onopen() {

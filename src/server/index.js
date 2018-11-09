@@ -9,10 +9,7 @@ const WEBPORT = 7654,
 ExpressWs(app);
 
 app.ws('/ws', (ws, req) => {
-    ws.on('message', msg => {
-        let res = gameManager.handleMsg(msg, ws);
-        ws.send(res);
-    });
+    ws.on('message', msg => gameManager.handleMsg(msg, ws));
 });
 
 app.use(Express.json());
@@ -21,6 +18,6 @@ app.use(Express.static('../webapp'));
 
 app.listen(WEBPORT, () => {
     console.log(`Tetonor listening on port ${WEBPORT}!`);
-    const opn = require('opn');
-    opn(`http://localhost:${WEBPORT}`);
+    // const opn = require('opn');
+    // opn(`http://localhost:${WEBPORT}`);
 });

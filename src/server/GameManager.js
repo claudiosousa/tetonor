@@ -15,10 +15,18 @@ class GameManager {
 
         switch (msg) {
             case 'getstatus':
-                return game.getStatus();
+                break;
             case 'join':
                 return game.addPlayer(ws);
         }
+
+        let type = 'status';
+        let data = game.getStatus(ws);
+        this.sendMessage(ws, type, data);
+    }
+
+    sendMessage(ws, type, data) {
+        ws.send(JSON.stringify({ type, data }));
     }
 }
 

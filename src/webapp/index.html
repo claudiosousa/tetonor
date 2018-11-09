@@ -18,12 +18,15 @@
     </header>
 
     <main>
-        TETONOR
+        <div id="app">
+            {{ title }}
+            <span v-if="seen">Now you see me</span>
+          </div>
     </main>
 
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/lodash/lodash.min.js"></script>
-
+    <script src="node_modules/vue/dist/vue.js"> </script>
     <script src="app.js" type="module"></script>
 </body>
 
