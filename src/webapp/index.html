@@ -17,7 +17,7 @@
     <main>
         <div id="app" v-cloak>
             <div>{{ title }}</div>
-
+            <join-game-view></join-game-view>
             <div v-if="game.status == GAME_STATUS.TO_JOIN">
                 <div>Choose the game to join:</div>
                 <input v-model="gameName" placeholder="Enter the game name to play">
@@ -44,7 +44,7 @@
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/lodash/lodash.min.js"></script>
     <script src="node_modules/vue/dist/vue.js"></script>
-    <script src="views/join-game.view.js"></script>
+
     <script src="app.js" type="module"></script>
 </body>
 
