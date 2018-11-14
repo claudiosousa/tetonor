@@ -1,4 +1,5 @@
-const Game = require('./Game.js');
+const communicationManager = require('./CommunicationManager.js'),
+    Game = require('./Game.js');
 
 class GameManager {
     constructor() {
@@ -6,28 +7,17 @@ class GameManager {
     }
 
     getGame(gameId) {
-        if (!this.gamesById.has(gameId)) this.gamesById[gameId] = new Game();
+        if (!this.gamesById[gameId]) this.gamesById[gameId] = new Game();
         return this.gamesById[gameId];
     }
 
     handleMsg(msg, ws) {
-        const game = this.getGame('exampleGame');
-
-        switch (msg) {
-            case 'getstatus':
-                break;
+        switch (msg.type) {
             case 'join':
-                return game.addPlayer(ws);
+                const game = this.getGame(msg.data);
+                game.addPlayer(ws);
         }
-
-        let type = 'status';
-        let data = game.getStatus(ws);
-        this.sendMessage(ws, type, data);
-    }
-
-    sendMessage(ws, type, data) {
-        ws.send(JSON.stringify({ type, data }));
     }
 }
 
-module.exports = GameManager;
+module.exports = new GameManager();

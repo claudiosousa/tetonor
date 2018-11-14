@@ -7,4 +7,20 @@ body {
 
 body {
     font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+[v-cloak] {
+    display: none;
 }

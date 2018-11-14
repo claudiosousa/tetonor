@@ -12,21 +12,39 @@
 <body>
 
     <header>
-        <a target="_blank" class="bug" href="https://github.com/claudiosousa/tetonor/issues/new">
-            Reporter un bug
-        </a>
     </header>
 
     <main>
-        <div id="app">
-            {{ title }}
-            <span v-if="seen">Now you see me</span>
-          </div>
+        <div id="app" v-cloak>
+            <div>{{ title }}</div>
+
+            <div v-if="game.status == GAME_STATUS.TO_JOIN">
+                <div>Choose the game to join:</div>
+                <input v-model="gameName" placeholder="Enter the game name to play">
+                <br>
+                <button @click="joinGame">Join</button>
+            </div>
+
+            <div v-if="game.status == GAME_STATUS.WAITING_PEER">
+                Waiting peer!
+            </div>
+
+            <div v-if="game.status == GAME_STATUS.PLAYING">
+                Playing!
+            </div>
+
+        </div>
     </main>
 
+    <footer>
+        <a target="_blank" class="bug" href="https://github.com/claudiosousa/tetonor/issues/new">
+            Report a bug
+        </a>
+    </footer>
     <script src="node_modules/jquery/dist/jquery.min.js"></script>
     <script src="node_modules/lodash/lodash.min.js"></script>
-    <script src="node_modules/vue/dist/vue.js"> </script>
+    <script src="node_modules/vue/dist/vue.js"></script>
+    <script src="views/join-game.view.js"></script>
     <script src="app.js" type="module"></script>
 </body>
 

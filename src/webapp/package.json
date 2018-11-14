@@ -22,7 +22,6 @@
         "font-awesome": "^4.7.0",
         "jquery": "^3.3.1",
         "lodash": "^4.17.11",
-        "nanoevents": "^1.0.8",
         "vue": "^2.5.17"
     }
 }

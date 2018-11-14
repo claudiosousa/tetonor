@@ -1,15 +1,16 @@
-const GameManager = require('./GameManager.js'),
+const communicationManager = require('./CommunicationManager.js'),
     Express = require('express'),
     ExpressWs = require('express-ws');
 
 const WEBPORT = 7654,
-    gameManager = new GameManager(),
     app = Express();
 
 ExpressWs(app);
 
 app.ws('/ws', (ws, req) => {
-    ws.on('message', msg => gameManager.handleMsg(msg, ws));
+    ws.on('message', msg =>
+        communicationManager.handleMsg(JSON.parse(msg), ws)
+    );
 });
 
 app.use(Express.json());
