@@ -7,6 +7,10 @@
     user-select: none;
 }
 
+.tetonor.dragging .equation-input {
+    background-color: #b8fdb7;
+}
+
 .board {
     grid-column: 2/3;
     grid-row: 2/3;
@@ -36,6 +40,7 @@
 }
 
 .equation-input,
+.equation-operator,
 .result,
 .choice {
     display: flex;
@@ -50,12 +55,18 @@
     grid-template-rows: 1fr;
 }
 
-.equation-input {
+.equation-input,
+.equation-operator {
     border-top: 1px dotted #666;
     cursor: pointer;
 }
 
-.equation-input:not(:last-child) {
+.equation-input.empty-input {
+    cursor: default;
+}
+
+.equation-input:first-child,
+.equation-operator {
     border-right: 1px dotted #666;
 }
 
@@ -71,9 +82,21 @@
     display: grid;
     grid-template-columns: repeat(16, 41px);
     background-color: white;
-    cursor: move;
 }
 
 .choice {
     border: 1px solid #333;
+    cursor: move;
+}
+
+.choice.empty-input {
+    cursor: pointer;
+}
+
+.choice.unavailable {
+    cursor: default;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' version='1.1' preserveAspectRatio='none' viewBox='0 0 100 100'><path d='M1 0 L0 1 L99 100 L100 99' fill='black' /><path d='M0 99 L99 0 L100 1 L1 100' fill='black' /></svg>");
+    background-repeat:no-repeat;
+    background-position:center center;
+    background-size: 100% 100%, auto;
 }

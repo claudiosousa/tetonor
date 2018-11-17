@@ -1,3 +1,5 @@
+import tetonorInput from './tetonor-input.js';
+
 const NEXT_OPERATOR = {
     '': '+',
     '+': 'x',
@@ -5,8 +7,10 @@ const NEXT_OPERATOR = {
 };
 
 export default {
+    components: { tetonorInput },
     data: function() {
         return {
+            dragging: false,
             choices: [
                 ...[
                     1,
@@ -26,7 +30,8 @@ export default {
                     16,
                     16
                 ].map(v => ({
-                    val: v
+                    val: v,
+                    available: 2
                 }))
             ],
             problems: [
@@ -49,9 +54,13 @@ export default {
                     36
                 ].map(r => ({
                     res: r,
-                    inputA: null,
+                    inputA: {
+                        index: null
+                    },
                     operator: '',
-                    inputB: null
+                    inputB: {
+                        index: null
+                    }
                 }))
             ],
             msg: 'TETONOR GAME'
@@ -59,6 +68,23 @@ export default {
     },
     methods: {
         toggleOperator: problem =>
-            (problem.operator = NEXT_OPERATOR[problem.operator])
+            (problem.operator = NEXT_OPERATOR[problem.operator]),
+        drop: function(input, e) {
+            e.preventDefault();
+            const choiceIndex = Number(e.dataTransfer.getData('choiceIndex'));
+            if (input.index != null) this.choices[input.index].available += 1;
+            this.choices[choiceIndex].available -= 1;
+            input.index = choiceIndex;
+        },
+        dragover: function(e) {
+            e.preventDefault();
+        },
+        dragstart: function(choiceIndex, e) {
+            this.dragging = true;
+            e.dataTransfer.setData('choiceIndex', choiceIndex);
+        },
+        dragend: function() {
+            this.dragging = false;
+        }
     }
 };

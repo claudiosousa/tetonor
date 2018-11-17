@@ -13,6 +13,16 @@
         />
         <link rel="stylesheet" href="style/app.css" />
         <link rel="stylesheet" href="style/tetonor.css" />
+        <script type="x-template" id="tetonor-input">
+            <div class="equation-input"
+                 :class="{'empty-input': !input.index}"
+                 @drop="drop"
+                 @dragover="dragover">
+                <span v-if="input.index != null">
+                    {{choices[input.index].val}}
+                </span>
+            </div>
+        </script>
     </head>
 
     <body>
@@ -40,7 +50,7 @@
 
                 <div v-if="game.status == GAME_STATUS.PLAYING">
                     <tetonor inline-template>
-                        <div class="tetonor">
+                        <div class="tetonor" :class="{dragging: dragging}">
                             <div class="board">
                                 <div class="problem-grid">
                                     <div
@@ -51,18 +61,20 @@
                                             {{ problem.res }}
                                         </div>
                                         <div class="equation">
-                                            <div class="equation-input">
-                                                {{ problem.inputA && problem.inputA.val }}
-                                            </div>
+                                            <tetonor-input
+                                                :input="problem.inputA"
+                                                :choices="choices"
+                                            ></tetonor-input>
                                             <div
-                                                class="equation-input"
+                                                class="equation-operator"
                                                 @click="toggleOperator(problem)"
                                             >
                                                 {{ problem.operator }}
                                             </div>
-                                            <div class="equation-input">
-                                                {{ problem.inputB && problem.inputB.val }}
-                                            </div>
+                                            <tetonor-input
+                                                :input="problem.inputB"
+                                                :choices="choices"
+                                            ></tetonor-input>
                                         </div>
                                     </div>
                                 </div>
@@ -71,7 +83,11 @@
                                 <div class="choices">
                                     <div
                                         class="choice"
-                                        v-for="choice in choices"
+                                        v-for="(choice, index) in choices"
+                                        :draggable="choice.val && choice.available != 0"
+                                        :class="{'empty-input': !choice.val, unavailable: !choice.available}"
+                                        @dragstart="dragstart(index, $event)"
+                                        @dragend="dragend"
                                     >
                                         {{ choice.val }}
                                     </div>
