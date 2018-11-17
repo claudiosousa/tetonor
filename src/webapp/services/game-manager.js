@@ -13,7 +13,7 @@ class GameManager {
 
     constructor() {
         this.state = {
-            status: GAME_STATUS.TO_JOIN
+            status: GAME_STATUS.PLAYING
         };
     }
 

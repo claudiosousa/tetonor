@@ -7,22 +7,26 @@
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
     <link rel="stylesheet" href="style/app.css">
+    <link rel="stylesheet" href="style/tetonor.css">
 </head>
 
 <body>
 
     <header>
+        <h1>Tetonor!</h1>
     </header>
 
     <main>
         <div id="app" v-cloak>
-            <div>{{ title }}</div>
-            <join-game-view></join-game-view>
             <div v-if="game.status == GAME_STATUS.TO_JOIN">
-                <div>Choose the game to join:</div>
-                <input v-model="gameName" placeholder="Enter the game name to play">
-                <br>
-                <button @click="joinGame">Join</button>
+                <chose-game inline-template>
+                    <div>
+                        <div>Choose the game to join:</div>
+                        <input v-model="gameName" placeholder="Enter the game name to play">
+                        <br>
+                        <button @click="joinGame">Join</button>
+                    </div>
+                </chose-game>
             </div>
 
             <div v-if="game.status == GAME_STATUS.WAITING_PEER">
@@ -30,7 +34,20 @@
             </div>
 
             <div v-if="game.status == GAME_STATUS.PLAYING">
-                Playing!
+                <tetonor inline-template>
+                    <div class="tetonor">
+                        <div>One</div>
+                        <div>Two</div>
+                        <div>Three</div>
+                        <div>Four</div>
+                        <div>Five</div>
+                        <div>Six</div>
+                        <div>Seven</div>
+                        <div>Eight</div>
+                        <div class="title">{{ msg }}</div>
+                    </div>
+                </tetonor>
+
             </div>
 
         </div>

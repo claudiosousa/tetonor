@@ -1,23 +1,19 @@
 import communicationService from './services/communication.service.js';
 import { gameManager, GAME_STATUS } from './services/game-manager.js';
-import joinGameView from './views/join-game.view.js';
+import choseGame from './components/chose-game.js';
+import tetonor from './components/tetonor.js';
 
 const components = {
-    'join-game-view': joinGameView
+    choseGame,
+    tetonor
 };
 
 var app = new Vue({
     el: '#app',
     data: {
-        title: 'Hello Vue!',
+        title: 'Hello to Tetonor!',
         game: gameManager,
-        gameName: null,
         GAME_STATUS
     },
-    components,
-    methods: {
-        joinGame: function() {
-            gameManager.joinGame(this.gameName);
-        }
-    }
+    components
 });
