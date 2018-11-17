@@ -1,7 +1,79 @@
 .tetonor {
     height: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    grid-auto-rows: minmax(100px, auto);
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 2fr 440px 1fr 36px 2fr;
+    text-align: center;
+    user-select: none;
+}
+
+.board {
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: flex;
+    justify-content: center;
+}
+
+.problem-grid {
+    width: 488px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.problem {
+    background-color: white;
+    height: 100%;
+    display: grid;
+    grid-template-columns: repeat(41, px);
+    grid-template-rows: 72px 36px;
+    grid-auto-rows: auto;
+    border: 1px solid #333;
+}
+
+.result {
+    font-size: 3rem;
+}
+
+.equation-input,
+.result,
+.choice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.equation {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 40px 40px 40px;
+    grid-template-rows: 1fr;
+}
+
+.equation-input {
+    border-top: 1px dotted #666;
+    cursor: pointer;
+}
+
+.equation-input:not(:last-child) {
+    border-right: 1px dotted #666;
+}
+
+.choices-container {
+    grid-column: 2/3;
+    grid-row: 4/5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.choices {
+    display: grid;
+    grid-template-columns: repeat(16, 41px);
+    background-color: white;
+    cursor: move;
+}
+
+.choice {
+    border: 1px solid #333;
 }

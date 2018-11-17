@@ -1,68 +1,101 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Tetonor web app</title>
+        <link
+            rel="stylesheet"
+            href="node_modules/bootstrap/dist/css/bootstrap.min.css"
+        />
+        <link
+            rel="stylesheet"
+            href="node_modules/font-awesome/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="style/app.css" />
+        <link rel="stylesheet" href="style/tetonor.css" />
+    </head>
 
-<head>
-    <meta charset="utf-8">
-    <title>Tetonor web app</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="node_modules/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="style/app.css">
-    <link rel="stylesheet" href="style/tetonor.css">
-</head>
+    <body>
+        <header><h1>Tetonor!</h1></header>
 
-<body>
+        <main>
+            <div id="app" v-cloak>
+                <div v-if="game.status == GAME_STATUS.TO_JOIN">
+                    <chose-game inline-template>
+                        <div>
+                            <div>Choose the game to join:</div>
+                            <input
+                                v-model="gameName"
+                                placeholder="Enter the game name to play"
+                            />
+                            <br />
+                            <button @click="joinGame()">Join</button>
+                        </div>
+                    </chose-game>
+                </div>
 
-    <header>
-        <h1>Tetonor!</h1>
-    </header>
+                <div v-if="game.status == GAME_STATUS.WAITING_PEER">
+                    Waiting peer!
+                </div>
 
-    <main>
-        <div id="app" v-cloak>
-            <div v-if="game.status == GAME_STATUS.TO_JOIN">
-                <chose-game inline-template>
-                    <div>
-                        <div>Choose the game to join:</div>
-                        <input v-model="gameName" placeholder="Enter the game name to play">
-                        <br>
-                        <button @click="joinGame">Join</button>
-                    </div>
-                </chose-game>
+                <div v-if="game.status == GAME_STATUS.PLAYING">
+                    <tetonor inline-template>
+                        <div class="tetonor">
+                            <div class="board">
+                                <div class="problem-grid">
+                                    <div
+                                        class="problem"
+                                        v-for="problem in problems"
+                                    >
+                                        <div class="result">
+                                            {{ problem.res }}
+                                        </div>
+                                        <div class="equation">
+                                            <div class="equation-input">
+                                                {{ problem.inputA && problem.inputA.val }}
+                                            </div>
+                                            <div
+                                                class="equation-input"
+                                                @click="toggleOperator(problem)"
+                                            >
+                                                {{ problem.operator }}
+                                            </div>
+                                            <div class="equation-input">
+                                                {{ problem.inputB && problem.inputB.val }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="choices-container">
+                                <div class="choices">
+                                    <div
+                                        class="choice"
+                                        v-for="choice in choices"
+                                    >
+                                        {{ choice.val }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </tetonor>
+                </div>
             </div>
+        </main>
 
-            <div v-if="game.status == GAME_STATUS.WAITING_PEER">
-                Waiting peer!
-            </div>
+        <footer>
+            <a
+                target="_blank"
+                class="bug"
+                href="https://github.com/claudiosousa/tetonor/issues/new"
+            >
+                Report a bug
+            </a>
+        </footer>
+        <script src="node_modules/jquery/dist/jquery.min.js"></script>
+        <script src="node_modules/lodash/lodash.min.js"></script>
+        <script src="node_modules/vue/dist/vue.js"></script>
 
-            <div v-if="game.status == GAME_STATUS.PLAYING">
-                <tetonor inline-template>
-                    <div class="tetonor">
-                        <div>One</div>
-                        <div>Two</div>
-                        <div>Three</div>
-                        <div>Four</div>
-                        <div>Five</div>
-                        <div>Six</div>
-                        <div>Seven</div>
-                        <div>Eight</div>
-                        <div class="title">{{ msg }}</div>
-                    </div>
-                </tetonor>
-
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <a target="_blank" class="bug" href="https://github.com/claudiosousa/tetonor/issues/new">
-            Report a bug
-        </a>
-    </footer>
-    <script src="node_modules/jquery/dist/jquery.min.js"></script>
-    <script src="node_modules/lodash/lodash.min.js"></script>
-    <script src="node_modules/vue/dist/vue.js"></script>
-
-    <script src="app.js" type="module"></script>
-</body>
-
+        <script src="app.js" type="module"></script>
+    </body>
 </html>
