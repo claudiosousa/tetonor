@@ -13,16 +13,19 @@
         />
         <link rel="stylesheet" href="style/app.css" />
         <link rel="stylesheet" href="style/tetonor.css" />
+
         <script type="x-template" id="tetonor-input">
             <div class="equation-input"
                  :class="{'empty-input': !input.index}"
-                 @drop="drop"
-                 @dragover="dragover">
+                 @click="clearValue"
+                 @drop="dropChoice"
+                 @dragover="dragChoice">
                 <span v-if="input.index != null">
                     {{choices[input.index].val}}
                 </span>
             </div>
         </script>
+
     </head>
 
     <body>
@@ -53,30 +56,38 @@
                         <div class="tetonor" :class="{dragging: dragging}">
                             <div class="board">
                                 <div class="problem-grid">
-                                    <div
-                                        class="problem"
-                                        v-for="problem in problems"
+                                    <problem
+                                        inline-template
+                                        v-for="(problem, index) in problems"
+                                        :problem="problem"
+                                        :key="index"
+                                        :choices="choices"
+                                        @updated="problemUpdated(problem)"
                                     >
-                                        <div class="result">
-                                            {{ problem.res }}
-                                        </div>
-                                        <div class="equation">
-                                            <tetonor-input
-                                                :input="problem.inputA"
-                                                :choices="choices"
-                                            ></tetonor-input>
-                                            <div
-                                                class="equation-operator"
-                                                @click="toggleOperator(problem)"
-                                            >
-                                                {{ problem.operator }}
+                                        <div class="problem" :class="state">
+                                            <div class="result">
+                                                {{ problem.res }}
                                             </div>
-                                            <tetonor-input
-                                                :input="problem.inputB"
-                                                :choices="choices"
-                                            ></tetonor-input>
+                                            <div class="equation">
+                                                <tetonor-input
+                                                    :input="problem.inputA"
+                                                    :choices="choices"
+                                                    @updated="equationUpdated(problem)"
+                                                ></tetonor-input>
+                                                <div
+                                                    class="equation-operator"
+                                                    @click="toggleOperator(problem)"
+                                                >
+                                                    {{ problem.operator }}
+                                                </div>
+                                                <tetonor-input
+                                                    :input="problem.inputB"
+                                                    :choices="choices"
+                                                    @updated="equationUpdated(problem)"
+                                                ></tetonor-input>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </problem>
                                 </div>
                             </div>
                             <div class="choices-container">

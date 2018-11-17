@@ -2,15 +2,22 @@ export default {
     props: ['input', 'choices'],
     template: '#tetonor-input',
     methods: {
-        drop: function(e) {
+        clearValue: function() {
+            if (this.input.index == null) return;
+            this.choices[this.input.index].available += 1;
+            this.input.index = null;
+            this.$emit('updated');
+        },
+        dropChoice: function(e) {
             e.preventDefault();
             const choiceIndex = Number(e.dataTransfer.getData('choiceIndex'));
             if (this.input.index != null)
                 this.choices[this.input.index].available += 1;
             this.choices[choiceIndex].available -= 1;
             this.input.index = choiceIndex;
+            this.$emit('updated');
         },
-        dragover: function(e) {
+        dragChoice: function(e) {
             e.preventDefault();
         }
     }
