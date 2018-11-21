@@ -12,10 +12,12 @@ class GameManager {
     }
 
     handleMsg(msg, ws) {
+        const game = this.getGame(msg.gameId);
         switch (msg.type) {
             case 'join':
-                const game = this.getGame(msg.data);
                 game.addPlayer(ws);
+            case 'solution':
+                game.updateSolution(ws, msg.data);
         }
     }
 }

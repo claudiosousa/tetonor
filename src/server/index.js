@@ -1,5 +1,6 @@
 const communicationManager = require('./CommunicationManager.js'),
     Express = require('express'),
+    opn = require('opn'),
     ExpressWs = require('express-ws');
 
 const WEBPORT = 7654,
@@ -19,6 +20,5 @@ app.use(Express.static('../webapp'));
 
 app.listen(WEBPORT, () => {
     console.log(`Tetonor listening on port ${WEBPORT}!`);
-    // const opn = require('opn');
-    // opn(`http://localhost:${WEBPORT}`);
+    opn(`http://localhost:${WEBPORT}`);
 });

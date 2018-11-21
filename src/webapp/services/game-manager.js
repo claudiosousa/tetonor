@@ -7,22 +7,27 @@ const GAME_STATUS = {
 };
 
 class GameManager {
-    get game() {
-        return this.state;
-    }
-
     constructor() {
         this.state = {
             status: GAME_STATUS.TO_JOIN
         };
     }
 
-    joinGame(name) {
-        communicationService.send('join', name);
+    joinGame(gameId) {
+        this.gameId = gameId;
+        communicationService.send('join', gameId);
     }
 
     updateState(state) {
         this.state = state;
+    }
+
+    updateBoard(board) {
+        this.board = board;
+    }
+
+    sendGameSolution(solution) {
+        communicationService.send('solution', this.gameId, solution);
     }
 
     onclose() {}

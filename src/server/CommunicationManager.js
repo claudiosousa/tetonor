@@ -7,8 +7,11 @@ class CommunicationManager {
         gameManager.handleMsg(msg, ws);
     }
 
-    sendToAll(wsLst, type, data) {
-        wsLst.forEach(ws => ws.send(JSON.stringify({ type, data })));
+    sendToAll(players, type, data) {
+        players
+            .map(({ ws }) => ws)
+            .filter(ws => ws.readyState == ws.OPEN)
+            .forEach(ws => ws.send(JSON.stringify({ type, data })));
     }
 
     sendToClient(ws, type, data) {

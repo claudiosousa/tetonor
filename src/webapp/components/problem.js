@@ -9,20 +9,23 @@ const NEXT_OPERATOR = {
 export default {
     components: { tetonorInput },
     props: ['problem', 'choices'],
+    data: function() {
+        return {
+            operator: this.problem.operator
+        };
+    },
     methods: {
         toggleOperator: function() {
-            this.problem.operator = NEXT_OPERATOR[this.problem.operator];
+            this.operator = this.problem.operator =
+                NEXT_OPERATOR[this.problem.operator];
             this.equationUpdated();
         },
         equationUpdated() {
             if (
-                this.problem.inputA.index != 0 &&
-                this.problem.inputB.index != 0 &&
+                this.problem.inputA.index != null &&
+                this.problem.inputB.index != null &&
                 this.problem.operator
             ) {
-                const a = this.choices[this.problem.inputA.index].val,
-                    b = this.choices[this.problem.inputB.index].val;
-                this.problem.operator == '+' ? a + b : a * b;
                 this.$emit('updated');
             }
         }

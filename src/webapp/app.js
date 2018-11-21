@@ -16,7 +16,10 @@ var app = new Vue({
     },
     computed: {
         game: function() {
-            return this.gameManager.game;
+            return this.gameManager.state;
+        },
+        board: function() {
+            return this.gameManager.board;
         }
     }
 });

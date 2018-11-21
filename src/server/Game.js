@@ -7,42 +7,48 @@ const GAME_STATUS = {
     ZOMBIE: 9
 };
 class Game {
+    get communicator() {
+        if (!this._communicationManager)
+            this._communicationManager = require('./CommunicationManager.js');
+        return this._communicationManager;
+    }
+
     constructor() {
         this.status = GAME_STATUS.WAITING_PEER;
         this.players = [];
         this.board = new GameBoard();
     }
 
-    addPlayer(player) {
-        this.players.push(player);
-        if (this.players.length == 2) {
+    addPlayer(ws) {
+        this.players.push({ ws, score: 0 });
+        if (this.players.length >= 1) {
             this.status = GAME_STATUS.PLAYING;
+            this.sendToAll('board', this.board);
         }
-        this.sendStatusToAll();
+        this.sendToAll('status', this.getStatus());
     }
 
-    sendStatusToAll() {
-        if (!this.communicationManager)
-            this.communicationManager = require('./CommunicationManager.js');
-        this.communicationManager.sendToAll(
-            this.players,
-            'status',
-            this.getStatus()
-        );
+    sendToAll(type, data) {
+        this.communicator.sendToAll(this.players, type, data);
     }
 
-    deletePlayer(player) {
-        this.players = this.players.filter(p => p != player);
+    deletePlayer(ws) {
+        this.players = this.players.filter(p => p.ws != ws);
         if (this.players.length == 0) {
             this.status = GAME_STATUS.WAITING_PEER;
         }
     }
 
+    updateSolution(ws, solution) {
+        const player = this.players.find(p => p.ws != ws);
+        //solution
+        this.sendToAll('status', this.getStatus());
+    }
+
     getStatus() {
         return {
             status: this.status,
-            players: this.players.length,
-            ...this.board
+            players: this.players.map(p => p.score)
         };
     }
 }

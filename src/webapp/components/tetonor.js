@@ -1,7 +1,8 @@
+import { gameManager } from '../services/game-manager.js';
 import problem from './problem.js';
 
 export default {
-    props: ['game'],
+    props: ['board'],
     components: { problem },
     data: function() {
         return {
@@ -9,8 +10,8 @@ export default {
         };
     },
     methods: {
-        problemUpdated(problem) {
-            console.log('updated', problem);
+        problemUpdated() {
+            gameManager.sendGameSolution(this.board);
         },
         dragstart: function(choiceIndex, e) {
             this.dragging = true;

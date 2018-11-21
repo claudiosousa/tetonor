@@ -12,8 +12,8 @@ class CommunicationService {
         // NOOP
     }
 
-    send(type, data) {
-        this.ws.send(JSON.stringify({ type, data }));
+    send(type, gameId, data) {
+        this.ws.send(JSON.stringify({ type, gameId, data }));
     }
 
     onMessage(evt) {
@@ -21,6 +21,9 @@ class CommunicationService {
         switch (msg.type) {
             case 'status':
                 gameManager.updateState(msg.data);
+                break;
+            case 'board':
+                gameManager.updateBoard(msg.data);
                 break;
         }
     }
