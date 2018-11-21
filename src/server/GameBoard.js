@@ -43,6 +43,10 @@ class GameBoard {
             }))
         ];
     }
+
+    calculateScore(solution) {
+        return Math.random() % 100;
+    }
 }
 
 module.exports = GameBoard;

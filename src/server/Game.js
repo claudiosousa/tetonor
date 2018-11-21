@@ -7,6 +7,10 @@ const GAME_STATUS = {
     ZOMBIE: 9
 };
 class Game {
+    get connectedPlayers() {
+        return this.players.filter(({ ws }) => ws.readyState == ws.OPEN);
+    }
+
     get communicator() {
         if (!this._communicationManager)
             this._communicationManager = require('./CommunicationManager.js');
@@ -29,7 +33,7 @@ class Game {
     }
 
     sendToAll(type, data) {
-        this.communicator.sendToAll(this.players, type, data);
+        this.communicator.sendToAll(this.connectedPlayers, type, data);
     }
 
     deletePlayer(ws) {
@@ -40,15 +44,18 @@ class Game {
     }
 
     updateSolution(ws, solution) {
-        const player = this.players.find(p => p.ws != ws);
-        //solution
+        const player = this.players.find(p => p.ws == ws);
+        player.score = this.board.calculateScore(solution);
         this.sendToAll('status', this.getStatus());
     }
 
     getStatus() {
         return {
             status: this.status,
-            players: this.players.map(p => p.score)
+            players: this.connectedPlayers.map(p => ({
+                connected: p.ws.readyState == p.ws.OPEN,
+                score: p.score
+            }))
         };
     }
 }

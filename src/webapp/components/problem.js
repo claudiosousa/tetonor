@@ -11,7 +11,8 @@ export default {
     props: ['problem', 'choices'],
     data: function() {
         return {
-            operator: this.problem.operator
+            operator: this.problem.operator,
+            state: null
         };
     },
     methods: {
@@ -21,11 +22,16 @@ export default {
             this.equationUpdated();
         },
         equationUpdated() {
+            this.state = null;
             if (
                 this.problem.inputA.index != null &&
                 this.problem.inputB.index != null &&
                 this.problem.operator
             ) {
+                const a = this.choices[this.problem.inputA.index].val,
+                    b = this.choices[this.problem.inputB.index].val;
+                const res = this.problem.operator == '+' ? a + b : a * b;
+                this.state = res == this.problem.res ? 'SOLVED' : 'ERROR';
                 this.$emit('updated');
             }
         }

@@ -10,7 +10,6 @@ class CommunicationManager {
     sendToAll(players, type, data) {
         players
             .map(({ ws }) => ws)
-            .filter(ws => ws.readyState == ws.OPEN)
             .forEach(ws => ws.send(JSON.stringify({ type, data })));
     }
 

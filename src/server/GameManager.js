@@ -4,6 +4,7 @@ const communicationManager = require('./CommunicationManager.js'),
 class GameManager {
     constructor() {
         this.gamesById = new WeakMap();
+        this.gamesByWs = new WeakMap();
     }
 
     getGame(gameId) {
@@ -12,12 +13,17 @@ class GameManager {
     }
 
     handleMsg(msg, ws) {
-        const game = this.getGame(msg.gameId);
+        let game;
         switch (msg.type) {
             case 'join':
+                game = this.getGame(msg.data);
+                this.gamesByWs[ws] = game;
                 game.addPlayer(ws);
+                break;
             case 'solution':
+                game = this.gamesByWs[ws];
                 game.updateSolution(ws, msg.data);
+                break;
         }
     }
 }

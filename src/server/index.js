@@ -20,5 +20,5 @@ app.use(Express.static('../webapp'));
 
 app.listen(WEBPORT, () => {
     console.log(`Tetonor listening on port ${WEBPORT}!`);
-    opn(`http://localhost:${WEBPORT}`);
+    //opn(`http://localhost:${WEBPORT}`);
 });
