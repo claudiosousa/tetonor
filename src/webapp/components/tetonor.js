@@ -2,7 +2,7 @@ import { gameManager } from '../services/game-manager.js';
 import problem from './problem.js';
 
 export default {
-    props: ['board'],
+    props: ['board', 'game'],
     components: { problem },
     data: function() {
         return {
