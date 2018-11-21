@@ -1,13 +1,16 @@
+const GameBoard = require('./GameBoard.js');
+
 const GAME_STATUS = {
     TO_JOIN: -1,
     WAITING_PEER: 0,
     PLAYING: 1,
-    ZOMBI: 9
+    ZOMBIE: 9
 };
 class Game {
     constructor() {
         this.status = GAME_STATUS.WAITING_PEER;
         this.players = [];
+        this.board = new GameBoard();
     }
 
     addPlayer(player) {
@@ -38,7 +41,8 @@ class Game {
     getStatus() {
         return {
             status: this.status,
-            players: this.players.length
+            players: this.players.length,
+            ...this.board
         };
     }
 }

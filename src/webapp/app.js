@@ -11,7 +11,12 @@ var app = new Vue({
     },
     data: {
         title: 'Hello to Tetonor!',
-        game: gameManager,
-        GAME_STATUS
+        GAME_STATUS,
+        gameManager
+    },
+    computed: {
+        game: function() {
+            return this.gameManager.game;
+        }
     }
 });

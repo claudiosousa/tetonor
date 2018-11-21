@@ -52,19 +52,19 @@
                 </div>
 
                 <div v-if="game.status == GAME_STATUS.PLAYING">
-                    <tetonor inline-template>
+                    <tetonor inline-template :game="game">
                         <div class="tetonor" :class="{dragging: dragging}">
                             <div class="board">
                                 <div class="problem-grid">
                                     <problem
                                         inline-template
-                                        v-for="(problem, index) in problems"
+                                        v-for="(problem, index) in game.problems"
                                         :problem="problem"
                                         :key="index"
-                                        :choices="choices"
+                                        :choices="game.choices"
                                         @updated="problemUpdated(problem)"
                                     >
-                                        <div class="problem" :class="state">
+                                        <div class="problem" :class="problem.state">
                                             <div class="result">
                                                 {{ problem.res }}
                                             </div>
@@ -94,7 +94,7 @@
                                 <div class="choices">
                                     <div
                                         class="choice"
-                                        v-for="(choice, index) in choices"
+                                        v-for="(choice, index) in game.choices"
                                         :draggable="choice.val && choice.available != 0"
                                         :class="{'empty-input': !choice.val, unavailable: !choice.available}"
                                         @dragstart="dragstart(index, $event)"

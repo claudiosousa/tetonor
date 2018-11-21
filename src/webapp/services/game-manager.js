@@ -7,13 +7,13 @@ const GAME_STATUS = {
 };
 
 class GameManager {
-    get status() {
-        return this.state.status;
+    get game() {
+        return this.state;
     }
 
     constructor() {
         this.state = {
-            status: GAME_STATUS.PLAYING
+            status: GAME_STATUS.TO_JOIN
         };
     }
 
