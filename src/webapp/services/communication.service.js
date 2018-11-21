@@ -12,13 +12,16 @@ class CommunicationService {
         // NOOP
     }
 
-    send(type, gameId, data) {
-        this.ws.send(JSON.stringify({ type, gameId, data }));
+    send(type, data) {
+        this.ws.send(JSON.stringify({ type, data }));
     }
 
     onMessage(evt) {
         const msg = JSON.parse(evt.data);
         switch (msg.type) {
+            case 'error':
+                alert(msg.data);
+                break;
             case 'status':
                 gameManager.updateState(msg.data);
                 break;

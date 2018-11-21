@@ -88,7 +88,7 @@
     grid-column: 3/4;
     grid-row: 2/3;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
 }
 
 .choices-container {

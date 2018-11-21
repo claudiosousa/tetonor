@@ -14,7 +14,6 @@ class GameManager {
     }
 
     joinGame(gameId) {
-        this.gameId = gameId;
         communicationService.send('join', gameId);
     }
 
@@ -27,7 +26,7 @@ class GameManager {
     }
 
     sendGameSolution(solution) {
-        communicationService.send('solution', this.gameId, solution);
+        communicationService.send('solution', solution);
     }
 
     onclose() {}

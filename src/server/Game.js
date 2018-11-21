@@ -23,13 +23,25 @@ class Game {
         this.board = new GameBoard();
     }
 
-    addPlayer(ws) {
-        this.players.push({ ws, score: 0 });
+    addPlayer(ws, user) {
+        let existingPlayer = this.players.find(p => p.user == user);
+        if (existingPlayer)
+            if (ws.readyState == ws.OPEN) {
+                this.communicator.sendToClient(
+                    ws,
+                    'error',
+                    'User already connected'
+                );
+                return false;
+            } else existingPlayer.ws = ws;
+        else this.players.push({ ws, score: 0, user });
+
         if (this.players.length >= 1) {
             this.status = GAME_STATUS.PLAYING;
-            this.sendToAll('board', this.board);
+            this.communicator.sendToClient(ws, 'board', this.board);
         }
         this.sendToAll('status', this.getStatus());
+        return true;
     }
 
     sendToAll(type, data) {
@@ -52,9 +64,10 @@ class Game {
     getStatus() {
         return {
             status: this.status,
-            players: this.connectedPlayers.map(p => ({
+            players: this.players.map(p => ({
                 connected: p.ws.readyState == p.ws.OPEN,
-                score: p.score
+                score: p.score,
+                user: p.user
             }))
         };
     }

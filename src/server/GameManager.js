@@ -16,9 +16,9 @@ class GameManager {
         let game;
         switch (msg.type) {
             case 'join':
-                game = this.getGame(msg.data);
+                game = this.getGame(msg.data.game);
                 this.gamesByWs[ws] = game;
-                game.addPlayer(ws);
+                game.addPlayer(ws, msg.data.user);
                 break;
             case 'solution':
                 game = this.gamesByWs[ws];

@@ -33,6 +33,9 @@
             <div v-if="game.status == GAME_STATUS.TO_JOIN">
                 <chose-game inline-template>
                     <div>
+                        <div>Enter you username:</div>
+                        <input v-model="username" placeholder="Enter the your name" />
+                        <br />
                         <div>Choose the game to join:</div>
                         <input v-model="gameName" placeholder="Enter the game name to play" />
                         <br />
@@ -69,7 +72,9 @@
                         </div>
                         <div class="scores-list">
                             <div v-for="player in game.players">
-                                <span>{{player.connected}}: </span>
+
+                                <span>{{player.user}}: </span>
+                                <span>{{player.connected}} </span>
                                 <span>{{player.score}}</span>
                             </div>
 
