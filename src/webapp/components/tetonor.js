@@ -1,9 +1,10 @@
 import { gameManager } from '../services/game-manager.js';
 import problem from './problem.js';
+import playerScore from './player-score.js';
 
 export default {
     props: ['board', 'game'],
-    components: { problem },
+    components: { problem, playerScore },
     data: function() {
         return {
             dragging: false

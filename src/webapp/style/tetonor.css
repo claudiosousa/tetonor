@@ -3,13 +3,18 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 2fr 440px 1fr 36px 2fr;
-    text-align: center;
-    user-select: none;
-    font-weight: 600;
 }
 
 .tetonor.dragging .equation-input {
     background-color: #b8fdb7;
+}
+
+.board,
+.choices-container {
+    text-align: center;
+    user-select: none;
+    font-weight: 600;
+    text-align: center;
 }
 
 .board {
@@ -85,10 +90,37 @@
 }
 
 .scores-list {
+    margin-right: 5%;
+    padding: 20px;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: min-content;
     grid-column: 3/4;
     grid-row: 2/3;
+}
+
+.scores-list .scores-list-title{
+    font-size: 2rem;
+}
+
+.scores-list .player-list{
+    overflow-y: auto;
+}
+
+.scores-list .player {
+    grid-column: 1/2;
     display: flex;
-    flex-direction: column;
+    margin: 2px;
+    border-bottom: 1px solid grey;
+    align-items: center;
+}
+
+.scores-list .player-name {
+    width: 140px;
+}
+
+.scores-list .player-score {
+    flex-grow: 1;
 }
 
 .choices-container {

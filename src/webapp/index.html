@@ -10,16 +10,16 @@
     <link rel="stylesheet" href="style/tetonor.css" />
 
     <script type="x-template" id="tetonor-input">
-            <div class="equation-input"
-                 :class="{'empty-input': !value}"
-                 @click="clearValue"
-                 @drop="dropChoice"
-                 @dragover="dragChoice">
-                <span v-if="value != null">
-                    {{value}}
-                </span>
-            </div>
-        </script>
+        <div class="equation-input"
+                :class="{'empty-input': !value}"
+                @click="clearValue"
+                @drop="dropChoice"
+                @dragover="dragChoice">
+            <span v-if="value != null">
+                {{value}}
+            </span>
+        </div>
+    </script>
 
 </head>
 
@@ -55,14 +55,14 @@
                             <div class="problem-grid">
                                 <problem inline-template v-for="(problem, index) in board.problems" :problem="problem"
                                     :key="index" :choices="board.choices" @updated="problemUpdated(problem)">
-                                    <div class="problem" :class="state">
+                                    <div class="problem" :class="correctness">
                                         <div class="result">
                                             {{ problem.res }}
                                         </div>
                                         <div class="equation">
                                             <tetonor-input :input="problem.inputA" :choices="choices" @updated="equationUpdated(problem)"></tetonor-input>
                                             <div class="equation-operator" @click="toggleOperator(problem)">
-                                                {{ operator }}
+                                                {{ problem.operator }}
                                             </div>
                                             <tetonor-input :input="problem.inputB" :choices="choices" @updated="equationUpdated(problem)"></tetonor-input>
                                         </div>
@@ -71,13 +71,17 @@
                             </div>
                         </div>
                         <div class="scores-list">
-                            <div v-for="player in game.players">
-
-                                <span>{{player.user}}: </span>
-                                <span>{{player.connected}} </span>
-                                <span>{{player.score}}</span>
+                            <span class="scores-list-title">Player list</span>
+                            <div class="player-list">
+                                <player-score :player="player" v-for="player in game.players" :connected="player.connected" inline-template>
+                                    <div class="player">
+                                        <div class="player-name">{{player.user}}</div>
+                                        <div class="progress player-score">
+                                            <div class="progress-bar" role="progressbar" :style="{ width: score + '%'}" aria-valuemin="0" aria-valuemax="100">{{score}}%</div>
+                                        </div>
+                                    </div>
+                                </player-score>
                             </div>
-
                         </div>
                         <div class="choices-container">
                             <div class="choices">
