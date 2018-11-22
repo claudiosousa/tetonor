@@ -14,11 +14,9 @@ const CORRECTNESS = {
 
 export default {
     components: { tetonorInput },
-    props: ['problem', 'choices'],
+    props: ['boardProblem', 'choices'],
     data: function() {
-        return {
-            problem: this.problem
-        };
+        return { problem: this.boardProblem };
     },
     computed: {
         correctness: function() {
