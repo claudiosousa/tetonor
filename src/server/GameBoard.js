@@ -52,7 +52,7 @@ class GameBoard {
             let boardProbl = this.problems[i];
             if (
                 solProbl.inputA.index == null ||
-                solProbl.inputA.index == null ||
+                solProbl.inputB.index == null ||
                 !solProbl.operator
             )
                 continue;

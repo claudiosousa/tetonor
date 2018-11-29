@@ -1,10 +1,13 @@
-const gameManager = require('./GameManager.js');
-
 class CommunicationManager {
     constructor() {}
 
+    get gameManager() {
+        if (!this._gameManager) this._gameManager = require('./GameManager.js');
+        return this._gameManager;
+    }
+
     handleMsg(msg, ws) {
-        gameManager.handleMsg(msg, ws);
+        this.gameManager.handleMsg(msg, ws);
     }
 
     sendToAll(players, type, data) {

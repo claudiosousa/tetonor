@@ -1,10 +1,9 @@
 const GameBoard = require('./GameBoard.js');
 
 const GAME_STATUS = {
-    TO_JOIN: -1,
     WAITING_PEER: 0,
     PLAYING: 1,
-    ZOMBIE: 9
+    OVER: 9
 };
 class Game {
     get connectedPlayers() {
@@ -17,13 +16,16 @@ class Game {
         return this._communicationManager;
     }
 
-    constructor() {
+    constructor(minPlayerCount) {
+        this.minPlayerCount = minPlayerCount;
         this.status = GAME_STATUS.WAITING_PEER;
         this.players = [];
         this.board = new GameBoard();
     }
 
     addPlayer(ws, user) {
+        if (this.status == GAME_STATUS.OVER) return;
+
         let existingPlayer = this.players.find(p => p.user == user);
         if (existingPlayer)
             if (ws.readyState == ws.OPEN) {
@@ -36,16 +38,22 @@ class Game {
             } else existingPlayer.ws = ws;
         else this.players.push({ ws, score: 0, user });
 
-        if (this.players.length >= 1) {
+        if (this.players.length >= this.minPlayerCount) {
             this.status = GAME_STATUS.PLAYING;
             this.communicator.sendToClient(ws, 'board', this.board);
         }
-        this.sendToAll('status', this.getStatus());
+        this.sendStatusToAll();
         return true;
     }
 
-    sendToAll(type, data) {
-        this.communicator.sendToAll(this.connectedPlayers, type, data);
+    sendStatusToAll() {
+        this.connectedPlayers.forEach(player =>
+            this.communicator.sendToClient(
+                player.ws,
+                'status',
+                this.getStatus(player)
+            )
+        );
     }
 
     deletePlayer(ws) {
@@ -56,14 +64,21 @@ class Game {
     }
 
     updateSolution(ws, solution) {
+        if (this.status == GAME_STATUS.OVER) return;
+
         const player = this.players.find(p => p.ws == ws);
         player.score = this.board.calculateScore(solution);
-        this.sendToAll('status', this.getStatus());
+        if (player.score == 100) {
+            this.status = GAME_STATUS.OVER;
+            this.winner = ws;
+        }
+        this.sendStatusToAll();
     }
 
-    getStatus() {
+    getStatus(player) {
         return {
             status: this.status,
+            winner: this.winner == player.ws,
             players: this.players.map(p => ({
                 connected: p.ws.readyState == p.ws.OPEN,
                 score: p.score,

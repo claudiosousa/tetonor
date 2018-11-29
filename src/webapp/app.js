@@ -1,12 +1,14 @@
-import communicationService from './services/communication.service.js';
+import { communicationService } from './services/communication.service.js';
 import { gameManager, GAME_STATUS } from './services/game-manager.js';
-import choseGame from './components/chose-game.js';
+import chooseGame from './components/choose-game.js';
+import joinGame from './components/join-game.js';
 import tetonor from './components/tetonor.js';
 
 var app = new Vue({
     el: '#app',
     components: {
-        choseGame,
+        chooseGame,
+        joinGame,
         tetonor
     },
     data: {
@@ -17,6 +19,9 @@ var app = new Vue({
     computed: {
         game: function() {
             return this.gameManager.state;
+        },
+        games: function() {
+            return this.gameManager.games;
         },
         board: function() {
             return this.gameManager.board;

@@ -1,16 +1,31 @@
-import communicationService from './communication.service.js';
+import { communicationService } from './communication.service.js';
 
 const GAME_STATUS = {
-    TO_JOIN: -1,
+    CHOOSE: -2,
+    JOIN: -1,
     WAITING_PEER: 0,
-    PLAYING: 1
+    PLAYING: 1,
+    OVER: 9
 };
 
 class GameManager {
     constructor() {
+        this.games = [];
         this.state = {
-            status: GAME_STATUS.TO_JOIN
+            status: GAME_STATUS.CHOOSE
         };
+    }
+
+    gamesList(gameList) {
+        this.games = gameList;
+    }
+
+    getGames() {
+        communicationService.send('list', '');
+    }
+
+    createGame(gameName, players) {
+        communicationService.send('create', { gameName, players });
     }
 
     joinGame(gameId) {

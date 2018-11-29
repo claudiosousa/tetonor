@@ -5,7 +5,7 @@ const TETONOR_USR_KEY = 'TETONOR_USR';
 export default {
     data: function() {
         return {
-            gameName: 'default',
+            games: 'default',
             username: localStorage.getItem(TETONOR_USR_KEY)
         };
     },

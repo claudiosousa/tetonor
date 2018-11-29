@@ -3,16 +3,14 @@ import { gameManager } from './game-manager.js';
 class CommunicationService {
     constructor() {
         this.ws = new WebSocket(`ws://${location.host}/ws`);
-        this.ws.onopen = () => this.onOpen();
+
         this.ws.onmessage = evt => this.onMessage(evt);
         this.ws.onclose = () => this.onClose();
+        this.connected = new Promise(resolve => (this.ws.onopen = resolve));
     }
 
-    onOpen() {
-        // NOOP
-    }
-
-    send(type, data) {
+    async send(type, data) {
+        await this.connected;
         this.ws.send(JSON.stringify({ type, data }));
     }
 
@@ -21,6 +19,9 @@ class CommunicationService {
         switch (msg.type) {
             case 'error':
                 alert(msg.data);
+                break;
+            case 'games':
+                gameManager.gamesList(msg.data);
                 break;
             case 'status':
                 gameManager.updateState(msg.data);
@@ -34,4 +35,5 @@ class CommunicationService {
     onClose() {}
 }
 
-export default new CommunicationService();
+const communicationService = new CommunicationService();
+export { communicationService };
