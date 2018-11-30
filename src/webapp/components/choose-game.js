@@ -21,7 +21,7 @@ export default {
             return TRANSLATIONS[gameStatus];
         },
         chooseGame: function(game) {
-            debugger;
+            gameManager.chooseGame(game.id);
         },
         createGame: function() {
             gameManager.createGame(this.gameName, this.players);

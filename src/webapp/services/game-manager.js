@@ -32,6 +32,11 @@ class GameManager {
         communicationService.send('join', gameId);
     }
 
+    chooseGame(gameId) {
+        this.chosenGameId = gameId;
+        this.state.status = GAME_STATUS.JOIN;
+    }
+
     updateState(state) {
         this.state = state;
     }

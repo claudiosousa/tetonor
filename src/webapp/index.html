@@ -36,8 +36,7 @@
                         <ul>
                             <li v-for="game in games">
                                 <a @click="chooseGame(game)" :class="{ game_waiting : game.status == GAME_STATUS.WAITING_PEER}">
-                                    {{game.id}}, {{status(game.status)}}, Players:
-                                    {{game.players}}/{{game.minPlayerCount}}
+                                    {{game.id}} Players: {{game.players}}/{{game.minPlayerCount}} ({{status(game.status)}})
                                 </a>
 
                             </li>
@@ -60,7 +59,7 @@
                         <input v-model="username" placeholder="Enter the your name" />
                         <br />
                         <div>Choose the game to join:</div>
-                        <input v-model="gameName" placeholder="Enter the game name to play" />
+                        <input v-model="gameName" readonly="readonly" />
                         <br />
                         <button @click="joinGame()">Join</button>
                     </div>

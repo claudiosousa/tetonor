@@ -33,3 +33,10 @@ footer {
 [v-cloak] {
     display: none;
 }
+
+#app ul li a {
+    color: #007bff;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-text-decoration-skip: objects;
+}
