@@ -34,7 +34,7 @@ class Game {
 
         if (this.players.length >= this.minPlayerCount) {
             this.status = GAME_STATUS.PLAYING;
-            this.communicationManager.sendToClient(ws, 'board', this.board);
+            communicationManager.sendToClient(ws, 'board', this.board);
         }
         this.sendStatusToAll();
         return true;
@@ -42,7 +42,7 @@ class Game {
 
     sendStatusToAll() {
         this.connectedPlayers.forEach(player =>
-            this.communicationManager.sendToClient(
+            communicationManager.sendToClient(
                 player.ws,
                 'status',
                 this.getStatus(player)

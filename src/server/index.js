@@ -4,15 +4,16 @@ const communicationManager = require('./CommunicationManager.js'),
     ExpressWs = require('express-ws');
 
 const WEBPORT = 7654,
-    app = Express();
-
-ExpressWs(app);
+    aWss = ExpressWs(Express()),
+    app = aWss.app;
 
 app.ws('/ws', (ws, req) => {
     ws.on('message', msg =>
         communicationManager.handleMsg(JSON.parse(msg), ws)
     );
 });
+
+communicationManager.setWssRoot(aWss.getWss('/'));
 
 app.use(Express.json());
 

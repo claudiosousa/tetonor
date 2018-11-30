@@ -20,6 +20,9 @@ class CommunicationService {
             case 'ERROR':
                 alert(msg.data);
                 break;
+            case 'gameCreated':
+                gameManager.chooseGame(msg.data);
+                break;
             case 'games':
                 gameManager.gamesList(msg.data);
                 break;

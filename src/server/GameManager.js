@@ -12,9 +12,13 @@ class GameManager {
         return this.gamesById[gameId];
     }
 
-    sendGameList(ws) {
-        communicationManager.sendToClient(
-            ws,
+    sendGameList(ws = null) {
+        const sendMethod = ws
+            ? _.partial(communicationManager.sendToClient, ws)
+            : communicationManager.sendToEveryone;
+
+        sendMethod.call(
+            communicationManager,
             'games',
             _.map(this.gamesById, (game, id) => ({
                 id,
@@ -45,7 +49,12 @@ class GameManager {
                     return;
                 }
                 this.gamesById[msg.data.gameName] = new Game(msg.data.players);
-                this.sendGameList(ws);
+                this.sendGameList();
+                communicationManager.sendToClient(
+                    ws,
+                    'gameCreated',
+                    msg.data.gameName
+                );
                 break;
             case 'join':
                 game = this.getGame(msg.data.game);
@@ -55,10 +64,12 @@ class GameManager {
                 }
                 this.gamesByWs[ws] = game;
                 game.addPlayer(ws, msg.data.user);
+                this.sendGameList();
                 break;
             case 'solution':
                 game = this.gamesByWs[ws];
                 game.updateSolution(ws, msg.data);
+                this.sendGameList();
                 break;
         }
     }

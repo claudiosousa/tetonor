@@ -39,7 +39,7 @@
                             <ul>
                                 <li v-for="game in games">
                                     <a
-                                        @click="chooseGame(game)"
+                                        @click="chooseGame(game.id)"
                                         :class="{ game_waiting : game.status == GAME_STATUS.WAITING_PEER}"
                                     >
                                         {{ game.id }} Players:
@@ -174,7 +174,7 @@
                 </div>
 
                 <div v-if="game.status == GAME_STATUS.OVER">
-                    <game-over inline-template>
+                    <game-over :game="game" inline-template>
                         <div>
                             Result: {{ game.winner ? 'WON' : 'LOST' }}
                             <button @click="newGame()">Play again</button>

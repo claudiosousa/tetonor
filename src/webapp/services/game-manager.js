@@ -21,6 +21,10 @@ class GameManager {
         this.games = gameList.filter(game => game.status != GAME_STATUS.OVER);
     }
 
+    restart() {
+        this.state.status = GAME_STATUS.CHOOSE;
+    }
+
     getGames() {
         communicationService.send('list', '');
     }

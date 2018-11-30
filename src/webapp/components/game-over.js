@@ -1,30 +1,8 @@
-import { gameManager, GAME_STATUS } from '../services/game-manager.js';
-
-const TRANSLATIONS = {
-    [GAME_STATUS.WAITING_PEER]: 'Waiting...',
-    [GAME_STATUS.PLAYING]: 'Playing',
-    [GAME_STATUS.OVER]: 'Finished'
-};
+import { gameManager } from '../services/game-manager.js';
 
 export default {
-    props: ['games'],
-    data: function() {
-        return {
-            GAME_STATUS,
-            gameName: null,
-            players: 2
-        };
-    },
-    created: () => gameManager.getGames(),
+    props: ['game'],
     methods: {
-        status: function(gameStatus) {
-            return TRANSLATIONS[gameStatus];
-        },
-        chooseGame: function(game) {
-            gameManager.chooseGame(game.id);
-        },
-        createGame: function() {
-            gameManager.createGame(this.gameName, this.players);
-        }
+        newGame: () => gameManager.restart()
     }
 };

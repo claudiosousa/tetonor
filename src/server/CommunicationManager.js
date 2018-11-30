@@ -14,6 +14,16 @@ class CommunicationManager {
         this.sendToClient(ws, 'ERROR', error);
     }
 
+    setWssRoot(wssRoot) {
+        this.wssRoot = wssRoot;
+    }
+
+    sendToEveryone(type, data) {
+        this.wssRoot.clients.forEach(ws =>
+            ws.send(JSON.stringify({ type, data }))
+        );
+    }
+
     sendToAll(players, type, data) {
         players
             .map(({ ws }) => ws)

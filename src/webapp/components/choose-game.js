@@ -20,8 +20,8 @@ export default {
         status: function(gameStatus) {
             return TRANSLATIONS[gameStatus];
         },
-        chooseGame: function(game) {
-            gameManager.chooseGame(game.id);
+        chooseGame: function(gameId) {
+            gameManager.chooseGame(gameId);
         },
         createGame: function() {
             gameManager.createGame(this.gameName, this.players);
