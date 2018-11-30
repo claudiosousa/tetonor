@@ -17,7 +17,7 @@ class CommunicationService {
     onMessage(evt) {
         const msg = JSON.parse(evt.data);
         switch (msg.type) {
-            case 'error':
+            case 'ERROR':
                 alert(msg.data);
                 break;
             case 'games':
@@ -32,7 +32,9 @@ class CommunicationService {
         }
     }
 
-    onClose() {}
+    onClose() {
+        gameManager.disconnected();
+    }
 }
 
 const communicationService = new CommunicationService();

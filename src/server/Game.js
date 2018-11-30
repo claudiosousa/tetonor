@@ -1,4 +1,5 @@
 const GameBoard = require('./GameBoard.js');
+const communicationManager = require('./CommunicationManager.js');
 
 const GAME_STATUS = {
     WAITING_PEER: 0,
@@ -10,12 +11,6 @@ class Game {
         return this.players.filter(({ ws }) => ws.readyState == ws.OPEN);
     }
 
-    get communicator() {
-        if (!this._communicationManager)
-            this._communicationManager = require('./CommunicationManager.js');
-        return this._communicationManager;
-    }
-
     constructor(minPlayerCount) {
         this.minPlayerCount = minPlayerCount;
         this.status = GAME_STATUS.WAITING_PEER;
@@ -24,23 +19,22 @@ class Game {
     }
 
     addPlayer(ws, user) {
-        if (this.status == GAME_STATUS.OVER) return;
+        if (this.status == GAME_STATUS.OVER) {
+            communicationManager.sendError(ws, 'Cannot join finished game');
+            return;
+        }
 
         let existingPlayer = this.players.find(p => p.user == user);
         if (existingPlayer)
             if (ws.readyState == ws.OPEN) {
-                this.communicator.sendToClient(
-                    ws,
-                    'error',
-                    'User already connected'
-                );
+                communicationManager.sendError(ws, 'User already connected');
                 return false;
             } else existingPlayer.ws = ws;
         else this.players.push({ ws, score: 0, user });
 
         if (this.players.length >= this.minPlayerCount) {
             this.status = GAME_STATUS.PLAYING;
-            this.communicator.sendToClient(ws, 'board', this.board);
+            this.communicationManager.sendToClient(ws, 'board', this.board);
         }
         this.sendStatusToAll();
         return true;
@@ -48,7 +42,7 @@ class Game {
 
     sendStatusToAll() {
         this.connectedPlayers.forEach(player =>
-            this.communicator.sendToClient(
+            this.communicationManager.sendToClient(
                 player.ws,
                 'status',
                 this.getStatus(player)
@@ -64,7 +58,10 @@ class Game {
     }
 
     updateSolution(ws, solution) {
-        if (this.status == GAME_STATUS.OVER) return;
+        if (this.status == GAME_STATUS.OVER) {
+            communicationManager.sendError(ws, 'Game is over!');
+            return;
+        }
 
         const player = this.players.find(p => p.ws == ws);
         player.score = this.board.calculateScore(solution);
@@ -88,4 +85,7 @@ class Game {
     }
 }
 
-module.exports = Game;
+module.exports = {
+    GAME_STATUS,
+    Game
+};

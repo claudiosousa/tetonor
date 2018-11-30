@@ -1,6 +1,7 @@
 import { communicationService } from './communication.service.js';
 
 const GAME_STATUS = {
+    DISCONNECTED: -3,
     CHOOSE: -2,
     JOIN: -1,
     WAITING_PEER: 0,
@@ -17,7 +18,7 @@ class GameManager {
     }
 
     gamesList(gameList) {
-        this.games = gameList;
+        this.games = gameList.filter(game => game.status != GAME_STATUS.OVER);
     }
 
     getGames() {
@@ -49,7 +50,9 @@ class GameManager {
         communicationService.send('solution', solution);
     }
 
-    onclose() {}
+    disconnected() {
+        this.state.status = GAME_STATUS.DISCONNECTED;
+    }
 }
 
 const gameManager = new GameManager();

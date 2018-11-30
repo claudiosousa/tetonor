@@ -1,5 +1,5 @@
 const communicationManager = require('./CommunicationManager.js'),
-    Game = require('./Game.js'),
+    { GAME_STATUS, Game } = require('./Game.js'),
     _ = require('lodash');
 
 class GameManager {
@@ -32,15 +32,27 @@ class GameManager {
                 this.sendGameList(ws);
                 break;
             case 'create':
-                if (!msg.data.gameName) return;
+                if (!msg.data.gameName) {
+                    communicationManager.sendError(
+                        ws,
+                        'Game name cannot be empty'
+                    );
+                    return;
+                }
                 game = this.getGame(msg.data.gameName);
-                if (game) return;
+                if (game && game.status != GAME_STATUS.OVER) {
+                    communicationManager.sendError(ws, 'Game already exists');
+                    return;
+                }
                 this.gamesById[msg.data.gameName] = new Game(msg.data.players);
                 this.sendGameList(ws);
                 break;
             case 'join':
                 game = this.getGame(msg.data.game);
-                if (!game) return;
+                if (!game) {
+                    communicationManager.sendError(ws, 'Game not found');
+                    return;
+                }
                 this.gamesByWs[ws] = game;
                 game.addPlayer(ws, msg.data.user);
                 break;

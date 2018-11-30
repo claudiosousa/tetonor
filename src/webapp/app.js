@@ -3,16 +3,17 @@ import { gameManager, GAME_STATUS } from './services/game-manager.js';
 import chooseGame from './components/choose-game.js';
 import joinGame from './components/join-game.js';
 import tetonor from './components/tetonor.js';
+import gameOver from './components/game-over.js';
 
 var app = new Vue({
     el: '#app',
     components: {
         chooseGame,
         joinGame,
+        gameOver,
         tetonor
     },
     data: {
-        title: 'Hello to Tetonor!',
         GAME_STATUS,
         gameManager
     },

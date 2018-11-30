@@ -10,6 +10,10 @@ class CommunicationManager {
         this.gameManager.handleMsg(msg, ws);
     }
 
+    sendError(ws, error) {
+        this.sendToClient(ws, 'ERROR', error);
+    }
+
     sendToAll(players, type, data) {
         players
             .map(({ ws }) => ws)
