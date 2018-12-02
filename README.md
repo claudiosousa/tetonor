@@ -2,14 +2,11 @@
 
 Multi-player web-based math game.
 
-## Installation
+# Installation
 
 ## Dependencies
 
-The depends on:
-
--   [Nodejs](https://nodejs.org/en/)
--   A browser that [supports](https://caniuse.com/#search=Web%20Components) Web Components.
+The game depends on [Nodejs](https://nodejs.org/en/).
 
 ### Install npm modules
 
