@@ -7,12 +7,17 @@ geometry: margin=2cm
 header-includes: |
     \usepackage{fancyhdr}
     \usepackage{lastpage}
+    \usepackage{dirtree}
     \usepackage{graphicx}
     \usepackage{float}
 
     \graphicspath{{./img/}}
 
     \pagestyle{fancy}
+
+    \setlength{\headheight}{14pt}
+    \renewcommand{\headrulewidth}{0.5pt}
+    \renewcommand{\footrulewidth}{0.5pt}
 
     \fancyhead[LO,LE]{Technologies Web avancées}
     \fancyhead[CO,CE]{TETONOR}
@@ -49,7 +54,73 @@ Chaque joueur joue sur son navigateur web, avec l'objectif d'être le premier à
 
 Dés qu'un joueur termine le jeu, le jeu est finit et le joueur est déclaré vainqueur.
 
-# Déroulement
+# Code source
+
+Le projet est disponible en open-source sur Github à l'url `https://github.com/claudiosousa/tetonor`.
+
+## Installation
+
+L'application utilise Node.js[^nodejs] et il doit être installé sur le système pour pouvoir tourner l'application.
+
+[^nodejs]: _https://nodejs.org/_
+
+Pour installer l'application, la première étape est de cloner le dépôt git:
+
+```{.bash}
+git clone git@github.com:claudiosousa/tetonor.git
+```
+
+Ensuite, il est nécessaire d'installer localement les dépendances du projet:
+
+```{.bash}
+npm install
+```
+
+Il ne reste alors qu'à démarrer l'application:
+
+```{.bash}
+npm start
+```
+
+L'instruction ci-dessus va également ouvrir une page de votre navigateur
+sur l'url de l'application `http://localhost:7654/`.
+
+Pour plus d'informations, lire le readme du projet sur Github.
+
+\newpage
+
+## Structure du code source
+
+Voici les fichiers et dossiers les plus importants sur Github:
+
+\dirtree{%
+.1 report \dotfill dossier content ce rapport.
+.1 package.json \dotfill instructions pour les packages npm.
+.1 src \dotfill racine du code source.
+.2 server \dotfill le serveur web.
+.3 CommunicationManager.js \dotfill service gérant les communications.
+.3 Game.js \dotfill l'état d'un jeu en cours.
+.3 GameBoard.js \dotfill la logique du jeu.
+.3 index.js \dotfill point d'entrée avec initialisation web et websocket.
+.2 webapp \dotfill l'application web.
+.3 components \dotfill composants UI.
+.4 choose-game.js \dotfill composant UI de choix de partie.
+.4 join-game.js \dotfill composant UI permettant de joindre une partie.
+.4 waiting-players.js \dotfill composant UI d'attente des autres joueurs.
+.4 tetonor.js\dotfill composant UI pour joueur le jeu Tetonor
+.4 problem.js \dotfill composant UI pour une case du jeu.
+.4 tetonor-input.js \dotfill un input pour une case.
+.4 player-score.js \dotfill composant UI affichent le score des joueurs.
+.4 game-over.js \dotfill composant UI de fin de partie.
+.3 services \dotfill services applicatifs.
+.4 communication-service.js \dotfill service gérant la communication.
+.4 game-manager.js \dotfill service gérant le jeu en cours.
+.3 style \dotfill css et images.
+.3 app.js \dotfill création de la vue principale.
+.3 index.html \dotfill la page HTML.
+}
+
+# Déroulement d'une partie
 
 ## Joindre une partie
 
@@ -92,7 +163,7 @@ Dés que le nombre de joueurs minimal est présent, la partie commence.
 À noter qu'il n'y a pas de nombre maximal de joueurs.
 Il est toujours possible à de nouveaux joueurs de joindre une partie qui a déjà commencé.
 
-## La partie
+## Le jeu
 
 Une fois la partie commencée, chaque joueur voir le même jeu de Tetonor à compléter.
 
@@ -121,24 +192,53 @@ Tous les joueurs sont alors informés que la partie est finie et le résultat (g
 
 # Architecture
 
-L'application est composée d'un client web, et d'un serveur web.
+L'application est composée d'une application web et d'un serveur web.
 
-### Application web
+La communication entre les client web et le serveur se fait en utilisant des requêtes Ajax[^ajax] ainsi qu'en utilisant des WebSockets[^websocket]. Ces dernières permettent une connexion bidirectionnelle avec le serveur. Le serveur les utilise pour envoyer (_push_) des informations sur les clients.
+
+[^ajax]: _https://en.wikipedia.org/wiki/Ajax\_(programming)_
+[^websocket]: _https://en.wikipedia.org/wiki/WebSocket_
+
+Aucune connexion n'a lieu entre deux client web directement.
+
+## Application web
 
 L'application web est une application monopage, réalisée en utilisant les libraires Vue.js[^vuejs] et Boostrap[^boostrap].
 
 [^vuejs]: Framework web utilisé pour construire des interfaces utilisateur pour des applications monopage (_https://vuejs.org/_)
 [^boostrap]: Collection de composants graphiques web (_https://getbootstrap.com/_)
 
-La communication avec le serveur se fait en utilisant des requêtes Ajax[^ajax] ainsi qu'en utilisant des WebSockets[^websocket]. Ces dernières permettent une connexion bidirectionnelle avec le serveur. le serveur les utilisent pour envoyer (_push_) des informations sur les clients.
+A noter que le pourcentage de complétion montré ainsi que le solution pour une partie en cours n'est pas décidée par le client mais par le serveur.
+Le serveur suppose que le client peut être compromis et comme tel ne lui fait pas confiance.
+À chaque fois que l'utilisateur fait une opération sur la partie en cours, l'état de son jeu est envoyé au serveur qui va comparer ce que l'utilisateur envoi avec l'état du jeu généré par le serveur pour la partie en cours.
 
-[^ajax]: _https://en.wikipedia.org/wiki/Ajax\_(programming)_
-[^websocket]: _https://en.wikipedia.org/wiki/WebSocket_
+Pour déterminer le nouveau score de la solution envoyée par le client, le serveur vérifie que les choix de numéros et opérateurs faits par l'utilisateur permettent de résoudre les cases du problème. Le serveur vérifie aussi que le numéros utilisés dans la solution sont ceux générés pour la partie concernée et que que le client n'utilise que la quantité qu'il a disponible.
 
-Naturellement, aucune connexion n'a lieu entre deux client directement.
+## Le serveur
 
-### Le serveur
+Le serveur rempli 2 rôles:
 
-Le serveur a comme objectif
+-   serveur web, afin de servir les fichiers de l'application web
+-   serveur applicatif supportant la logique du jeu
 
-# Installation
+Il utilise principalement les libraires Express[^express] et Express-ws[^express-ws] comme support de connexion HTTP et WebSockets.
+
+[^express]: Librairie offrant des capacités de serveur http (_https://expressjs.com/_)
+[^express-ws]: Librairie supportant un serveur websockets (_https://www.npmjs.com/package/express-ws_)
+
+# Conclusion
+
+Ce projet s'est montré intéréssant et ludique.
+
+Il a été pour moi l'oportunité de résoudre des problèmes de nature différente:
+
+-   **architecture**: Comment connecter plusieurs clients à un serveur? Permettre à ce serveur d'envoyer des messages à plusieurs de ces clients ? Detecter la connection et déconnection de ces clients ?
+-   **engénierie logiciel**: Comment gérer sur le serveur plusieurs parties, chacune avec une liste de joueurs diférents? Comment gérer les états et transitions des diférentes parties? Quels messages sont'ils nécéssaires pour mantenir les clients et le serveur synchronisés ?
+-   **expérience utilisateur**: Comment conceptualiser graphiquement les différentes parties en cours? Comment montrer à l'utilisateur qu'il peut participer à des parties des autres ou créer des nouvelles? Comment gérér le cas ou des joueurs de deconnectent de la partie en cours? Quand doit le jeux commencer? Comment reenforcer l'esprit de compétition alors que le joeurs ne sont pas physiquement ensemblent?
+-   **design**: Comment rendre le tout esthétiquement agréable?
+
+De plus, ce projet fut pour moi l'opportunité d'apprendre à utiliser Vue.js.
+C'est un concurrent sérieux de React.js et Angular auquel je m'intéréssait depuis un moment.
+La connaissance de ce framework complémentaire client compléter agréablement celle faite en cours de Angular.
+
+Les parties les plus intéréssantes pour moi ont été l'architecture et tous les problèmes que découlent de la gestions de multiples parties ayant lieu simultanément.

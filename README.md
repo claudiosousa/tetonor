@@ -6,7 +6,7 @@ Multi-player web-based math game.
 
 ## Dependencies
 
-The game depends on [Nodejs](https://nodejs.org/en/).
+The game depends on [Node.js](https://nodejs.org/en/).
 
 ### Install npm modules
 
