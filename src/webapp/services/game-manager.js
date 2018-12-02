@@ -51,7 +51,10 @@ class GameManager {
     }
 
     sendGameSolution(solution) {
-        communicationService.send('solution', solution);
+        communicationService.send('solution', {
+            ...solution,
+            gameId: this.gameId
+        });
     }
 
     disconnected() {

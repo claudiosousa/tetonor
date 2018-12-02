@@ -5,7 +5,6 @@ const communicationManager = require('./CommunicationManager.js'),
 class GameManager {
     constructor() {
         this.gamesById = {};
-        this.gamesByWs = {};
     }
 
     getGame(gameId) {
@@ -30,20 +29,29 @@ class GameManager {
     }
 
     handleMsg(msg, ws) {
-        let game;
+        if (msg.type == 'list') {
+            this.sendGameList(ws);
+            return;
+        }
+        if (!msg.data.gameId) {
+            communicationManager.sendError(ws, 'Game name cannot be empty');
+            return;
+        }
+        let game = this.getGame(msg.data.gameId);
+
+        if (
+            msg.type != 'create' &&
+            (!game || game.status === GAME_STATUS.OVER)
+        ) {
+            communicationManager.sendError(ws, 'Game not found');
+            return;
+        }
+
         switch (msg.type) {
             case 'list':
                 this.sendGameList(ws);
                 break;
             case 'create':
-                if (!msg.data.gameId) {
-                    communicationManager.sendError(
-                        ws,
-                        'Game name cannot be empty'
-                    );
-                    return;
-                }
-                game = this.getGame(msg.data.gameId);
                 if (game && game.status != GAME_STATUS.OVER) {
                     communicationManager.sendError(ws, 'Game already exists');
                     return;
@@ -57,17 +65,10 @@ class GameManager {
                 );
                 break;
             case 'join':
-                game = this.getGame(msg.data.gameId);
-                if (!game) {
-                    communicationManager.sendError(ws, 'Game not found');
-                    return;
-                }
-                this.gamesByWs[ws] = game;
                 game.addPlayer(ws, msg.data.user);
                 this.sendGameList();
                 break;
             case 'solution':
-                game = this.gamesByWs[ws];
                 game.updateSolution(ws, msg.data);
                 this.sendGameList();
                 break;
