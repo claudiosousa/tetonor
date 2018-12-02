@@ -52,7 +52,7 @@
                             </ul>
                             <br />
                             <div>Add game:</div>
-                            <input v-model="gameName" placeholder="Game name" />
+                            <input v-model="gameId" placeholder="Game name" />
                             <div>Add game:</div>
                             <input
                                 v-model="players"
@@ -75,7 +75,7 @@
                             />
                             <br />
                             <div>Choose the game to join:</div>
-                            <input v-model="gameName" readonly="readonly" />
+                            <input v-model="gameId" readonly="readonly" />
                             <br />
                             <button @click="joinGame()">Join</button>
                         </div>

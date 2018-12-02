@@ -32,10 +32,15 @@ class Game {
             } else existingPlayer.ws = ws;
         else this.players.push({ ws, score: 0, user });
 
-        if (this.players.length >= this.minPlayerCount) {
+        if (this.players.length == this.minPlayerCount) {
             this.status = GAME_STATUS.PLAYING;
+            communicationManager.sendToAll(
+                this.connectedPlayers,
+                'board',
+                this.board
+            );
+        } else if (this.players.length >= this.minPlayerCount)
             communicationManager.sendToClient(ws, 'board', this.board);
-        }
         this.sendStatusToAll();
         return true;
     }

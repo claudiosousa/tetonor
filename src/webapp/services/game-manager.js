@@ -29,8 +29,8 @@ class GameManager {
         communicationService.send('list', '');
     }
 
-    createGame(gameName, players) {
-        communicationService.send('create', { gameName, players });
+    createGame(gameId, players) {
+        communicationService.send('create', { gameId, players });
     }
 
     joinGame(gameId) {
@@ -38,8 +38,8 @@ class GameManager {
     }
 
     chooseGame(gameId) {
-        this.chosenGameId = gameId;
-        this.state.status = GAME_STATUS.JOIN;
+        this.gameId = gameId;
+        setTimeout(() => (this.state.status = GAME_STATUS.JOIN));
     }
 
     updateState(state) {

@@ -9,11 +9,7 @@ const TRANSLATIONS = {
 export default {
     props: ['games'],
     data: function() {
-        return {
-            GAME_STATUS,
-            gameName: null,
-            players: 2
-        };
+        return { GAME_STATUS, gameId: null, players: 2 };
     },
     created: () => gameManager.getGames(),
     methods: {
@@ -24,7 +20,7 @@ export default {
             gameManager.chooseGame(gameId);
         },
         createGame: function() {
-            gameManager.createGame(this.gameName, this.players);
+            gameManager.createGame(this.gameId, this.players);
         }
     }
 };
