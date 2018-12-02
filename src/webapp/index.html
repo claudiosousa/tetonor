@@ -28,39 +28,83 @@
     </head>
 
     <body>
-        <header><h1>Tetonor!</h1></header>
+        <header><h1>Tetonor game</h1></header>
 
         <main>
             <div id="app" v-cloak>
                 <div v-if="game.status == GAME_STATUS.CHOOSE">
                     <choose-game :games="games" inline-template>
                         <div>
-                            <div>Games list</div>
-                            <ul>
-                                <li v-for="game in games">
-                                    <a
-                                        @click="chooseGame(game.id)"
-                                        :class="{ game_waiting : game.status == GAME_STATUS.WAITING_PEER}"
+                            <div class="card" style="margin-bottom:1rem;">
+                                <div class="card-header">Choose a game</div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Existing games</h5>
+                                    <span
+                                        v-if="games.length == 0"
+                                        class="comment"
                                     >
-                                        {{ game.id }} Players:
-                                        {{ game.players }}/{{
-                                            game.minPlayerCount
-                                        }}
-                                        ({{ status(game.status) }})
-                                    </a>
-                                </li>
-                            </ul>
-                            <br />
-                            <div>Add game:</div>
-                            <input v-model="gameId" placeholder="Game name" />
-                            <div>Add game:</div>
-                            <input
-                                v-model="players"
-                                type="number"
-                                placeholder="Number of players"
-                            />
-                            <br />
-                            <button @click="createGame()">Create</button>
+                                        No games yet
+                                    </span>
+
+                                    <ul>
+                                        <li v-for="game in games">
+                                            <a
+                                                @click="chooseGame(game.id)"
+                                                :class="{ game_waiting : game.status == GAME_STATUS.WAITING_PEER}"
+                                            >
+                                                {{ game.id }} Players:
+                                                {{ game.players }}/{{
+                                                    game.minPlayerCount
+                                                }}
+                                                ({{ status(game.status) }})
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title">Create new game</h5>
+                                    <div class="row form-group">
+                                        <div class="col">
+                                            <label>Game name:</label>
+                                            <input
+                                                v-model="gameId"
+                                                class="form-control"
+                                                placeholder="My super game"
+                                                required
+                                            />
+                                        </div>
+                                        <div class="col">
+                                            <label>Players:</label>
+                                            <select
+                                                class="form-control"
+                                                v-model="players"
+                                            >
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                                <option>4</option>
+                                                <option>5</option>
+                                                <option>6</option>
+                                                <option>7</option>
+                                                <option>8</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        style="float:right"
+                                        class="btn btn-primary"
+                                        @click="createGame()"
+                                        :disabled="!gameId"
+                                        :class="{disabled:!gameId}"
+                                    >
+                                        Create
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </choose-game>
                 </div>
@@ -68,16 +112,34 @@
                 <div v-if="game.status == GAME_STATUS.JOIN">
                     <join-game inline-template>
                         <div>
-                            <div>Enter you username:</div>
-                            <input
-                                v-model="username"
-                                placeholder="Enter the your name"
-                            />
-                            <br />
-                            <div>Choose the game to join:</div>
-                            <input v-model="gameId" readonly="readonly" />
-                            <br />
-                            <button @click="joinGame()">Join</button>
+                            <div class="row form-group">
+                                <div class="col">
+                                    <label>Username:</label>
+                                    <input
+                                        class="form-control"
+                                        v-model="username"
+                                        placeholder="Superman"
+                                    />
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>Game chosen:</label>
+                                        <input
+                                            class="form-control"
+                                            v-model="gameId"
+                                            readonly="readonly"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <button
+                                style="float:right;"
+                                type="button"
+                                class="btn btn-primary"
+                                @click="joinGame()"
+                            >
+                                Join
+                            </button>
                         </div>
                     </join-game>
                 </div>
@@ -177,7 +239,13 @@
                     <game-over :game="game" inline-template>
                         <div>
                             Result: {{ game.winner ? 'WON' : 'LOST' }}
-                            <button @click="newGame()">Play again</button>
+                            <button
+                                type="button"
+                                class="btn btn-primary"
+                                @click="newGame()"
+                            >
+                                Play again
+                            </button>
                         </div>
                     </game-over>
                 </div>

@@ -8,9 +8,13 @@ const WEBPORT = 7654,
     app = aWss.app;
 
 app.ws('/ws', (ws, req) => {
-    ws.on('message', msg =>
-        communicationManager.handleMsg(JSON.parse(msg), ws)
-    );
+    ws.on('message', msg => {
+        try {
+            communicationManager.handleMsg(JSON.parse(msg), ws);
+        } catch (e) {
+            console.error(`ERROR: ${e}`);
+        }
+    });
 });
 
 communicationManager.setWssRoot(aWss.getWss('/'));
