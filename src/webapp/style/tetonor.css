@@ -99,11 +99,11 @@
     grid-row: 2/3;
 }
 
-.scores-list .scores-list-title{
+.scores-list .scores-list-title {
     font-size: 2rem;
 }
 
-.scores-list .player-list{
+.scores-list .player-list {
     overflow-y: auto;
 }
 
@@ -120,6 +120,7 @@
 }
 
 .scores-list .player-score {
+    min-width: 50px;
     flex-grow: 1;
 }
 

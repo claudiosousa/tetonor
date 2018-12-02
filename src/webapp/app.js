@@ -5,7 +5,7 @@ import joinGame from './components/join-game.js';
 import tetonor from './components/tetonor.js';
 import gameOver from './components/game-over.js';
 
-var app = new Vue({
+const app = new Vue({
     el: '#app',
     components: {
         chooseGame,
@@ -15,7 +15,8 @@ var app = new Vue({
     },
     data: {
         GAME_STATUS,
-        gameManager
+        gameManager,
+        errorMessage: null
     },
     computed: {
         game: function() {
@@ -27,5 +28,13 @@ var app = new Vue({
         board: function() {
             return this.gameManager.board;
         }
+    },
+    methods: {
+        showError: function(error) {
+            this.errorMessage = error;
+            $('#errorModal').modal();
+        }
     }
 });
+
+communicationService.registerApp(app);

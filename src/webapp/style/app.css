@@ -13,14 +13,13 @@ body {
 body {
     display: grid;
     grid-template-columns: auto min-content auto;
-    grid-template-rows: 70px auto 20px;
+    grid-template-rows: min-content auto min-content;
     font-family: sans-serif;
 }
 
 header {
     grid-column: 1/4;
     grid-row: 1/2;
-    padding: 18px 0 17px;
     border-bottom: 1px solid rgba(0, 63, 123, 0.1);
 }
 
@@ -46,7 +45,6 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    border-top: 1px solid rgba(0, 63, 123, 0.1);
 }
 
 .bug {
@@ -56,12 +54,6 @@ footer {
 
 [v-cloak] {
     display: none;
-}
-
-#app ul li a {
-    color: #007bff;
-    list-style: none;
-    cursor: pointer;
 }
 
 .comment {

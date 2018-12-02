@@ -14,11 +14,15 @@ class CommunicationService {
         this.ws.send(JSON.stringify({ type, data }));
     }
 
+    registerApp(app) {
+        this.app = app;
+    }
+
     onMessage(evt) {
         const msg = JSON.parse(evt.data);
         switch (msg.type) {
             case 'ERROR':
-                alert(msg.data);
+                this.app.showError(msg.data);
                 break;
             case 'gameCreated':
                 gameManager.chooseGame(msg.data);
