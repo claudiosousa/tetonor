@@ -1,4 +1,8 @@
 class GameBoard {
+    static get MAX_VALUE() {
+        return 20;
+    }
+
     constructor() {
         this.generateGame();
     }
@@ -12,7 +16,7 @@ class GameBoard {
 
     generateGame() {
         this.choices = [...Array(16)]
-            .map(() => Math.floor(Math.random() * 20) + 1)
+            .map(() => Math.floor(Math.random() * GameBoard.MAX_VALUE) + 1)
             .sort((a, b) => a - b)
             .map(v => ({ val: v, available: 2 }));
 
@@ -35,13 +39,23 @@ class GameBoard {
             .map(([i, j, a, b, op]) => ({
                 res: op == '+' ? a + b : a * b,
                 inputA: {
-                    index: i
+                    index: null
                 },
-                operator: op,
+                operator: '',
                 inputB: {
-                    index: j
+                    index: null
                 }
             }));
+        // .map(([i, j, a, b, op]) => ({
+        //     res: op == '+' ? a + b : a * b,
+        //     inputA: {
+        //         index: i
+        //     },
+        //     operator: op,
+        //     inputB: {
+        //         index: j
+        //     }
+        //}));
     }
 
     calculateScore(solution) {

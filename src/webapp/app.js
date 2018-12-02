@@ -4,12 +4,14 @@ import chooseGame from './components/choose-game.js';
 import joinGame from './components/join-game.js';
 import tetonor from './components/tetonor.js';
 import gameOver from './components/game-over.js';
+import waitingPlayers from './components/waiting-players.js';
 
 const app = new Vue({
     el: '#app',
     components: {
         chooseGame,
         joinGame,
+        waitingPlayers,
         gameOver,
         tetonor
     },

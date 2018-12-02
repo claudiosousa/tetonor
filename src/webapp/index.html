@@ -43,7 +43,7 @@
                 <span class="navbar-text">
                     <a
                         target="_blank"
-                        class="bug"
+                        class="bug text-muted"
                         href="https://github.com/claudiosousa/tetonor/issues/new"
                     >
                         Report a bug
@@ -75,7 +75,7 @@
                                             href="#"
                                             class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                                             @click="chooseGame(game.id)"
-                                            :class="game.status == GAME_STATUS.WAITING_PEER ? 'list-group-item-primary' :'list-group-item-secondary'"
+                                            :class="game.status == GAME_STATUS.WAITING_PEER ? 'list-group-item-success' :'list-group-item-primary'"
                                         >
                                             {{ game.id }}
 
@@ -170,8 +170,26 @@
                     </join-game>
                 </div>
 
-                <div v-if="game.status == GAME_STATUS.WAITING_PEER">
-                    Waiting peer!
+                <div
+                    class="jumbotron jumbotron-fluid"
+                    v-if="game.status == GAME_STATUS.WAITING_PEER"
+                >
+                    <waiting-players
+                        :game-manager="gameManager"
+                        inline-template
+                    >
+                        <div class="container">
+                            <h1 class="display-4">
+                                You joined {{ gameManager.gameId }}
+                            </h1>
+                            <p class="lead text-center">
+                                Waiting for other players to join in... ({{
+                                    game.players
+                                }}
+                                / {{ game.minPlayerCount }})
+                            </p>
+                        </div>
+                    </waiting-players>
                 </div>
 
                 <div v-if="game.status == GAME_STATUS.PLAYING">
@@ -217,30 +235,31 @@
                                 </div>
                             </div>
                             <div class="scores-list">
-                                <span class="scores-list-title"
-                                    >Player list</span
-                                >
+                                <h5>Player list</h5>
                                 <div class="player-list">
-                                    <div
-                                        class="player"
-                                        v-for="player in game.players"
-                                        :connected="player.connected"
+                                    <player-score
+                                        v-for="player in playersByScore"
+                                        :player="player"
+                                        inline-template
                                     >
-                                        <div class="player-name">
-                                            {{ player.user }}
-                                        </div>
-                                        <div class="progress player-score">
-                                            <div
-                                                class="progress-bar"
-                                                role="progressbar"
-                                                :style="{ width: player.score + '%'}"
-                                                aria-valuemin="0"
-                                                aria-valuemax="100"
-                                            >
-                                                {{ score }}%
+                                        <div
+                                            class="player list-group-item"
+                                            :class="player.connected ? 'connected' : 'list-group-item-light'"
+                                        >
+                                            <div>{{ player.user }}</div>
+                                            <div class="progress player-score">
+                                                <div
+                                                    class="progress-bar"
+                                                    role="progressbar"
+                                                    :style="{ width: player.score + '%'}"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="100"
+                                                >
+                                                    {{ score }}%
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </player-score>
                                 </div>
                             </div>
                             <div class="choices-container">
@@ -261,17 +280,26 @@
                     </tetonor>
                 </div>
 
-                <div v-if="game.status == GAME_STATUS.OVER">
+                <div
+                    class="jumbotron jumbotron-fluid"
+                    v-if="game.status == GAME_STATUS.OVER"
+                >
                     <game-over :game="game" inline-template>
-                        <div>
-                            Result: {{ game.winner ? 'WON' : 'LOST' }}
-                            <button
-                                type="button"
-                                class="btn btn-primary"
-                                @click="newGame()"
-                            >
-                                Play again
-                            </button>
+                        <div class="container">
+                            <h1 class="display-4">
+                                Game over. You
+                                {{ game.winner ? 'WON' : 'LOST' }}
+                            </h1>
+                            <p class="lead text-center"></p>
+                            <div class="text-center">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    @click="newGame()"
+                                >
+                                    Play again
+                                </button>
+                            </div>
                         </div>
                     </game-over>
                 </div>

@@ -2,7 +2,9 @@
     height: 100%;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: 2fr 440px 1fr 36px 2fr;
+    grid-template-rows: 1fr 440px 1fr 36px 1fr;
+    min-height: 600px;
+    min-width: 1024px;
 }
 
 .tetonor.dragging .equation-input {
@@ -90,33 +92,16 @@
 }
 
 .scores-list {
-    margin-right: 5%;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: min-content;
+    margin: 0 20px;
     grid-column: 3/4;
     grid-row: 2/3;
-}
-
-.scores-list .scores-list-title {
-    font-size: 2rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .scores-list .player-list {
+    max-height: 100%;
     overflow-y: auto;
-}
-
-.scores-list .player {
-    grid-column: 1/2;
-    display: flex;
-    margin: 2px;
-    border-bottom: 1px solid grey;
-    align-items: center;
-}
-
-.scores-list .player-name {
-    width: 140px;
 }
 
 .scores-list .player-score {
