@@ -286,9 +286,17 @@
                 >
                     <game-over :game="game" inline-template>
                         <div class="container">
-                            <h1 class="display-4">
-                                Game over. You
-                                {{ game.winner ? 'WON' : 'LOST' }}
+                            <h1
+                                v-if="game.winner"
+                                class="display-4 text-success"
+                            >
+                                You Won ! Congratulations !
+                            </h1>
+                            <h1
+                                v-if="!game.winner"
+                                class="display-4 text-danger"
+                            >
+                                Oh no! You lost 😞
                             </h1>
                             <p class="lead text-center"></p>
                             <div class="text-center">
@@ -304,8 +312,17 @@
                     </game-over>
                 </div>
 
-                <div v-if="game.status == GAME_STATUS.DISCONNECTED">
-                    Connection to server was terminated. Please try again later.
+                <div
+                    class="jumbotron jumbotron-fluid"
+                    v-if="game.status == GAME_STATUS.DISCONNECTED"
+                >
+                    <div class="container">
+                        <h1 class="display-4">Server disconnected</h1>
+                        <p class="lead text-center">
+                            The connection to server was lost. Please try again
+                            later.
+                        </p>
+                    </div>
                 </div>
 
                 <div
