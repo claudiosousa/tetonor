@@ -195,6 +195,18 @@ Le premier joueur ayant complété le jeu à 100% gagne la partie.
 
 Tous les joueurs sont alors informés que la partie est finie et leur résultat est affiché (_gagné_ ou _perdu_).
 
+## Intération entre client web et le serveur
+
+Le diagramme i-dessous, montrer les principales intérations entre le client web et le serveur:
+
+\begin{figure}[H]
+\centering
+\includegraphics[height=1.0\textheight]{img/Interactions client-server.png}
+\caption{Une partie en cours}
+\label{game}
+\end{figure}
+
+
 # Architecture
 
 L’architecture est composée d’une application web et d’un serveur web.
@@ -233,9 +245,7 @@ Il utilise principalement les libraires Express[^express] et Express-ws[^express
 
 # Conclusion
 
-Ce projet s’est montré intéressant et ludique.
-
-Il a été pour moi l’opportunité de résoudre des problèmes de nature différente :
+Ce projet a été pour moi l'oportunité de résoudre des problèmes de nature différente:
 
 -   **architecture** : Comment connecter plusieurs clients à un serveur ? Permettre à ce serveur d’envoyer des messages à plusieurs de ces clients ? Détecter la connexion et déconnexion de ces clients ?
 -   **ingénierie logiciel** : Comment gérer sur le serveur plusieurs parties, chacune avec une liste de joueurs différents ? Comment gérer les états et transitions des différentes parties ? Quels messages sont-ils nécessaires pour maintenir les clients et le serveur synchronisés ?
@@ -244,6 +254,11 @@ Il a été pour moi l’opportunité de résoudre des problèmes de nature diff�
 
 De plus, ce projet fut pour moi l’opportunité d’apprendre à utiliser Vue.js.
 C’est un concurrent sérieux de React.js et Angular auquel je m’intéressait depuis un moment.
-La connaissance de ce framework complémentaire client vient compléter agréablement celle faite en cours de Angular.
+La connaissance de ce framework complémentaire vient compléter la connaissance faire en cours sur Angular.
 
-Les parties les plus intéressantes pour moi ont été l’architecture et tous les problèmes que découlent de la gestion de multiples parties ayant lieu simultanément.
+Les parties les plus intéréssantes furent l'architecture et tous les problèmes algorithmiques que découlent de la gestion de multiples parties ayant lieu simultanément.
+
+Au sujet de la charge de travail, j'ai sous-estimé l'effort nécéssaire pour amener le projet à terme.
+Le projet était suffisament grand pour être partagé, et il aurait été plus raisonable de le faire à deux.
+
+Pour résumer, ce projet a été intérlssant et ludique, permettant de mettre en pratique la théorie vue en vours.
