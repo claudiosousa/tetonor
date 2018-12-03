@@ -2,15 +2,35 @@ const communicationManager = require('./CommunicationManager.js'),
     { GAME_STATUS, Game } = require('./Game.js'),
     _ = require('lodash');
 
+/**
+ * A tetonor board
+ * Generates new games and evaluates submited solutions
+ * @class GameManager
+ */
 class GameManager {
+    /**
+     *Creates an instance of GameManager.
+     * @memberof GameManager
+     */
     constructor() {
         this.gamesById = {};
     }
 
+    /**
+     * Search a game by id
+     * @param {*} gameId The id of the game to searcj for
+     * @returns The game if found, null otherwise
+     * @memberof GameManager
+     */
     getGame(gameId) {
         return this.gamesById[gameId];
     }
 
+    /**
+     * Sends the list of games to one or all player
+     * @param {*} [ws=null] Optional player, uull by default
+     * @memberof GameManager
+     */
     sendGameList(ws = null) {
         const sendMethod = ws
             ? _.partial(communicationManager.sendToClient, ws)
@@ -28,6 +48,12 @@ class GameManager {
         );
     }
 
+    /**
+     * Handles game messages received from a player
+     * @param {*} msg Message received
+     * @param {*} ws The playerwebsocket
+     * @memberof GameManager
+     */
     handleMsg(msg, ws) {
         if (msg.type == 'list') {
             this.sendGameList(ws);

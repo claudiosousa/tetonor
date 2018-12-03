@@ -1,16 +1,32 @@
 const GameBoard = require('./GameBoard.js');
 const communicationManager = require('./CommunicationManager.js');
 
+/** Possible game states */
 const GAME_STATUS = {
     WAITING_PEER: 0,
     PLAYING: 1,
     OVER: 9
 };
+
+/**
+ * Keeps a state of a running game and players
+ * @class Game
+ */
 class Game {
+    /**
+     * List of connected players
+     * @readonly
+     * @memberof Game
+     */
     get connectedPlayers() {
         return this.players.filter(({ ws }) => ws.readyState == ws.OPEN);
     }
 
+    /**
+     *Creates an instance of Game
+     * @param {*} minPlayerCount Minimal nmuber of players to start the game
+     * @memberof Game
+     */
     constructor(minPlayerCount) {
         this.minPlayerCount = minPlayerCount;
         this.status = GAME_STATUS.WAITING_PEER;
@@ -18,6 +34,13 @@ class Game {
         this.board = new GameBoard();
     }
 
+    /**
+     * Adds a player to the game
+     * @param {*} ws The client websocket
+     * @param {*} user  User name
+     * @returns True if adding succeded, False otherwise
+     * @memberof Game
+     */
     addPlayer(ws, user) {
         if (this.status == GAME_STATUS.OVER) {
             communicationManager.sendError(ws, 'Cannot join finished game');
@@ -45,6 +68,10 @@ class Game {
         return true;
     }
 
+    /**
+     * Sends the current game status to all game players
+     * @memberof Game
+     */
     sendStatusToAll() {
         this.connectedPlayers.forEach(player =>
             communicationManager.sendToClient(
@@ -55,6 +82,11 @@ class Game {
         );
     }
 
+    /**
+     * Registers that a player has left the game
+     * @param {*} ws The client websocket
+     * @memberof Game
+     */
     deletePlayer(ws) {
         this.players = this.players.filter(p => p.ws != ws);
         if (this.players.length == 0) {
@@ -62,6 +94,12 @@ class Game {
         }
     }
 
+    /**
+     * Submits a new solution for a player
+     * @param {*} ws player websocket
+     * @param {*} solution New solution
+     * @memberof Game
+     */
     updateSolution(ws, solution) {
         if (this.status == GAME_STATUS.OVER) {
             communicationManager.sendError(ws, 'Game is over!');
@@ -77,6 +115,12 @@ class Game {
         this.sendStatusToAll();
     }
 
+    /**
+     * Generates a game status objet for a given player
+     * @param {*} player The concerned player
+     * @returns The game status objet
+     * @memberof Game
+     */
     getStatus(player) {
         return {
             status: this.status,
