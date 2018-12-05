@@ -1,7 +1,12 @@
-import { gameManager } from './game-manager.js';
+ import { gameManager } from './game-manager.js';
 
+/**
+ * Service handling the communication
+ * @class CommunicationService
+ */
 class CommunicationService {
     constructor() {
+        // establishment of the socket to the server
         this.ws = new WebSocket(`ws://${location.host}/ws`);
 
         this.ws.onmessage = evt => this.onMessage(evt);
@@ -9,15 +14,34 @@ class CommunicationService {
         this.connected = new Promise(resolve => (this.ws.onopen = resolve));
     }
 
+
+    /**
+     * Asynchronously sends a message to the server
+     *
+     * @param {*} type Message type
+     * @param {*} data Message data
+     * @memberof CommunicationService
+     */
     async send(type, data) {
         await this.connected;
         this.ws.send(JSON.stringify({ type, data }));
     }
 
+    /**
+     * Register the main view
+     * @param {*} app Vue.js app
+     * @memberof CommunicationService
+     */
     registerApp(app) {
         this.app = app;
     }
 
+    /**
+     * Handles newly received messages
+     *
+     * @param {*} evt the socket event
+     * @memberof CommunicationService
+     */
     onMessage(evt) {
         const msg = JSON.parse(evt.data);
         switch (msg.type) {
@@ -39,6 +63,11 @@ class CommunicationService {
         }
     }
 
+    /**
+     * Handles the socket diconnection
+     *
+     * @memberof CommunicationService
+     */
     onClose() {
         gameManager.disconnected();
     }

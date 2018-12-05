@@ -1,11 +1,19 @@
+/**
+ * UI Component hangling a Tetonor case
+ */
 import tetonorInput from './tetonor-input.js';
 
+/**
+ * List of operators with sucessor.
+ * current: op -> next:op
+ */
 const NEXT_OPERATOR = {
     '': '+',
     '+': 'x',
     x: ''
 };
 
+/** Tetonor case status to class */
 const CORRECTNESS = {
     NOK: 'ERROR',
     NA: '',
@@ -16,9 +24,13 @@ export default {
     components: { tetonorInput },
     props: ['boardProblem', 'choices'],
     data: function() {
-        return { problem: this.boardProblem };
+        return {
+            /** A tetonor case */
+            problem: this.boardProblem
+        };
     },
     computed: {
+        /** Case corectness status */
         correctness: function() {
             if (
                 this.problem.inputA.index != null &&
@@ -36,10 +48,12 @@ export default {
         }
     },
     methods: {
+        /** Toggles the case operator */
         toggleOperator: function() {
             this.problem.operator = NEXT_OPERATOR[this.problem.operator];
             this.equationUpdated();
         },
+        /** Npotifies the caes was updated */
         equationUpdated() {
             this.$emit('updated');
         }
