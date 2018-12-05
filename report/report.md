@@ -4,6 +4,7 @@ date: Décembre 2018
 documentclass: article
 fontsize: 11pt
 geometry: margin=2cm
+lang: fr
 header-includes: |
     \usepackage{fancyhdr}
     \usepackage{lastpage}
@@ -44,13 +45,13 @@ title: |
 # Introduction
 
 Ce projet consiste à développer un jeu multijoueur basé sur des technologies web mettant
-en pratique la théorie du cours de Technologies Web avancées, suivit à l'HEPIA[^hepia],
-le semestre d'automne 2018 avec professeur Stéphane Malandain.
+en pratique la théorie du cours de Technologies Web avancées suivit à l'HEPIA[^hepia] pendant
+le semestre d'automne 2018 avec le professeur Stéphane Malandain.
 
 [^hepia]: Haute école du paysage, d'ingénierie et d'architecture de Genève (_https://www.hesge.ch/hepia/_)
 
 Ce jeu permet à plusieurs joueurs de jouer une même partie de Tetonor de manière simultanée et concurrente.
-Chaque joueur joue sur son navigateur web, avec l'objectif d'être le premier à terminer le jeu
+Chaque joueur joue sur son navigateur web, avec l'objectif d'être le premier à terminer le jeu.
 
 Dés qu'un joueur termine le jeu, le jeu est finit et le joueur est déclaré vainqueur.
 
@@ -124,20 +125,23 @@ Voici les fichiers et dossiers les plus importants sur Github:
 
 ## Joindre une partie
 
-Les utilisateurs jouent des _parties_ ensembles.
-Une partie est constituée d'un ensemble de joueurs que essayent simultanéement de résoudre le même jeu de Tetonor.
+Les utilisateurs jouent des _parties_ ensemble.
+Une partie est constituée d'un ensemble de joueurs quI essayent simultanément de résoudre le même jeu de Tetonor.
 
-L'utilisateur peut joindre une partie déjà existante en choisissant une parmi celles listés.
-mage \ref{liste_parties} montre la liste de parties créés. Leur nom est affiché à gauche, et à droite il est affiché le nombre de joueurs ayant déjà joint la partie et le nombre minimal de joueurs nécéssaires pour commencer la partie. Les parties commencées sont affichées en bleu, et leur autres en vert.
+L'utilisateur peut joindre une partie déjà existante en choisissant une parmi celles qui sont listés.
+L'image \ref{liste_parties} montre la liste de parties créés.
+Leur nom est affiché à gauche, et à droite il est affiché le nombre de joueurs ayant déjà rejoint la
+partie ainsi que le nombre minimal de joueurs nécéssaires pour commencer la partie.
+Les parties commencées sont affichées en bleu, et les autres sont en vert.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth]{img/list_of_parties.png}
-\caption{Liste des parties existante}
+\caption{Liste des parties existantes}
 \label{liste_parties}
 \end{figure}
 
-L'utilisateur peut aussi choisir de créer une nouveau partie, en spécifiant un nom et un
+L'utilisateur peut aussi choisir de créer une nouvelle partie, en spécifiant un nom et un
 nombre minimal de joueurs, comme le montre l'image \ref{nouvelle_partie}.
 
 \begin{figure}[H]
@@ -147,9 +151,9 @@ nombre minimal de joueurs, comme le montre l'image \ref{nouvelle_partie}.
 \label{nouvelle_partie}
 \end{figure}
 
-Les joueurs qui joignent une partie sont mis en attente jusqu'à ce que le nombre minimal
-de joueur ait joint la partie.
-En attendant, le nombre de joueurs ayant joint la partie est affiché en continu
+Les joueurs qui rejoignent une partie sont mis en attente jusqu'à ce que le nombre minimal
+de joueurs aie rejoint la partie.
+En attendant, le nombre de joueurs ayant rejoint la partie est affiché en continu
 comme le montre l'image \ref{waiting_players}.
 
 \begin{figure}[H]
@@ -165,7 +169,7 @@ Il est toujours possible à de nouveaux joueurs de joindre une partie qui a déj
 
 ## Le jeu
 
-Une fois la partie commencée, chaque joueur voir le même jeu de Tetonor à compléter.
+Une fois la partie commencée, chaque joueur reçoit du serveur le même jeu de Tetonor à résoudre.
 
 Le jeu se joue en déplaçant les numéros disponibles sur les cases à remplir.
 L'opérateur se choisit en cliquant sur la case entre les numéros.
@@ -181,25 +185,25 @@ Les joueurs dont le nom apparaît en gris sont des joueurs ayant quitté la part
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.8\textwidth]{img/game.png}
+\includegraphics[width=0.9\textwidth]{img/game.png}
 \caption{Une partie en cours}
 \label{game}
 \end{figure}
 
 Le premier joueur ayant complété le jeu à 100% gagne la partie.
 
-Tous les joueurs sont alors informés que la partie est finie et le résultat (gagné ou perdu).
+Tous les joueurs sont alors informés que la partie est finie et leur résultat est affiché (_gagné_ ou _perdu_).
 
 # Architecture
 
-L'application est composée d'une application web et d'un serveur web.
+L'architecture est composée d'une application web et d'un serveur web.
 
-La communication entre les client web et le serveur se fait en utilisant des requêtes Ajax[^ajax] ainsi qu'en utilisant des WebSockets[^websocket]. Ces dernières permettent une connexion bidirectionnelle avec le serveur. Le serveur les utilise pour envoyer (_push_) des informations sur les clients.
+La communication entre les clients web et le serveur se fait en utilisant des requêtes Ajax[^ajax] ainsi qu'en utilisant des WebSockets[^websocket]. Ces dernières permettent une connexion bidirectionnelle avec le serveur. Le serveur les utilise pour envoyer (_push_) des informations sur les clients.
 
 [^ajax]: _https://en.wikipedia.org/wiki/Ajax\_(programming)_
 [^websocket]: _https://en.wikipedia.org/wiki/WebSocket_
 
-Aucune connexion n'a lieu entre deux client web directement.
+Aucune connexion n'a lieu entre deux clients web directement.
 
 ## Application web
 
@@ -208,9 +212,9 @@ L'application web est une application monopage, réalisée en utilisant les libr
 [^vuejs]: Framework web utilisé pour construire des interfaces utilisateur pour des applications monopage (_https://vuejs.org/_)
 [^boostrap]: Collection de composants graphiques web (_https://getbootstrap.com/_)
 
-A noter que le pourcentage de complétion montré ainsi que le solution pour une partie en cours n'est pas décidée par le client mais par le serveur.
+A noter que le pourcentage de progréssion montré ainsi que la solution pour une partie en cours n'est pas décidée par le client mais par le serveur.
 Le serveur suppose que le client peut être compromis et comme tel ne lui fait pas confiance.
-À chaque fois que l'utilisateur fait une opération sur la partie en cours, l'état de son jeu est envoyé au serveur qui va comparer ce que l'utilisateur envoi avec l'état du jeu généré par le serveur pour la partie en cours.
+À chaque fois que l'utilisateur fait une opération sur la partie en cours, l'état de son jeu est envoyé au serveur. Ce dernier va comparer ce que l'utilisateur envoie avec l'état du jeu généré par le serveur pour la partie en cours.
 
 Pour déterminer le nouveau score de la solution envoyée par le client, le serveur vérifie que les choix de numéros et opérateurs faits par l'utilisateur permettent de résoudre les cases du problème. Le serveur vérifie aussi que le numéros utilisés dans la solution sont ceux générés pour la partie concernée et que que le client n'utilise que la quantité qu'il a disponible.
 
