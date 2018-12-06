@@ -13,7 +13,6 @@ const WEBPORT = 7654,
     aWss = ExpressWs(Express()),
     app = aWss.app;
 
-
 /**
  * Handling on new web socket client
  */
@@ -39,7 +38,7 @@ app.use(Express.static('../webapp'));
 /**
  * Instanciation of web server
  */
-app.listen(WEBPORT, () => {
+app.listen(WEBPORT, '0.0.0.0', () => {
     console.log(`Tetonor listening on port ${WEBPORT}!`);
     opn(`http://localhost:${WEBPORT}`);
 });
