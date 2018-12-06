@@ -35,7 +35,7 @@ output:
         md_extensions: '+inline\_notes'
 title: |
     | TETONOR
-    | Un jeu web intéractif multijoueur
+    | Un jeu web interactif multijoueur
 ---
 
 \thispagestyle{empty} \newpage
@@ -54,7 +54,7 @@ le semestre d’automne 2018 avec le professeur Stéphane Malandain.
 Ce jeu permet à plusieurs joueurs de jouer une même partie de Tetonor de manière simultanée et concurrente.
 Chaque joueur joue sur son navigateur web, avec l’objectif d’être le premier à terminer le jeu.
 
-Dès qu’un joueur termine le jeu, le jeu est finit et le joueur est déclaré vainqueur.
+Dès qu’un joueur termine le jeu, le jeu est fini et le joueur est déclaré vainqueur.
 
 # Code source
 
@@ -127,7 +127,7 @@ Voici les fichiers et dossiers les plus importants sur Github :
 ## Joindre une partie
 
 Les utilisateurs jouent des _parties_ ensemble.
-Une partie est constituée d’un ensemble de joueurs qui essayent simultanément de résoudre le même jeu de Tetonor.
+Une partie est constituée d’un ensemble de joueurs qui essaient simultanément de résoudre le même jeu de Tetonor.
 
 L’utilisateur peut joindre une partie déjà existante en choisissant une parmi celles qui sont listés.
 L’image \ref{liste_parties} montre la liste de parties créés.
@@ -180,7 +180,7 @@ Les numéros corrects sont affichés en bleu et les incorrects en rouge.
 
 Sur la colonne de droite, la liste des joueurs en cours est affichée avec leur taux de progression.
 
-Le joueur peut ainsi mesurer sont progrès relativement à ses adversaires.
+Le joueur peut ainsi mesurer son progrès relativement à ses adversaires.
 
 Les joueurs dont le nom apparaît en gris sont des joueurs ayant quitté la partie.
 
@@ -195,9 +195,9 @@ Le premier joueur ayant complété le jeu à 100% gagne la partie.
 
 Tous les joueurs sont alors informés que la partie est finie et leur résultat est affiché (_gagné_ ou _perdu_).
 
-## Intération entre client web et le serveur
+## Échanges entre client web et le serveur
 
-Le diagramme i-dessous, montrer les principales intérations entre le client web et le serveur:
+Le diagramme ci-dessous, montre les principales échanges entre le client web et le serveur :
 
 \begin{figure}[H]
 \centering
@@ -233,7 +233,7 @@ Pour déterminer le nouveau score de la solution envoyée par le client, le serv
 
 ## Le serveur
 
-Le serveur rempli 2 rôles:
+Le serveur rempli 2 rôles :
 
 -   serveur web, afin de servir les fichiers de l’application web
 -   serveur applicatif supportant la logique du jeu
@@ -245,20 +245,30 @@ Il utilise principalement les libraires Express[^express] et Express-ws[^express
 
 # Conclusion
 
-Ce projet a été pour moi l'oportunité de résoudre des problèmes de nature différente:
+Ce projet a été pour moi l'opportunité de résoudre des problèmes dans les domaines de l'architecture, ingénierie logicielle,
+expérience utilisateur et design.
 
--   **architecture** : Comment connecter plusieurs clients à un serveur ? Permettre à ce serveur d’envoyer des messages à plusieurs de ces clients ? Détecter la connexion et déconnexion de ces clients ?
--   **ingénierie logiciel** : Comment gérer sur le serveur plusieurs parties, chacune avec une liste de joueurs différents ? Comment gérer les états et transitions des différentes parties ? Quels messages sont-ils nécessaires pour maintenir les clients et le serveur synchronisés ?
--   **expérience utilisateur** : Comment conceptualiser graphiquement les différentes parties en cours ? Comment montrer à l’utilisateur qu’il peut participer à des parties des autres ou créer des nouvelles ? Comment gérer le cas où des joueurs se déconnectent de la partie en cours ? Quand doit le jeu commencer ? Comment renforcer l’esprit de compétition alors que les joueurs ne partagent pas le même espace physique ?
--   **design** : Comment rendre le tout esthétiquement agréable ?
+Sur le plan **architectural**, j'ai pu créer une architecture qui permet au serveur de gérer plusieurs clients connectés
+simultanément, travaillant ensemble de manière structurée et cohérente.
+Les mécanismes de communication permettent au serveur de recevoir et envoyer de messages aux clients individuellement, mais aussi d'envoyer des messages à tous les clients ou à un sous-ensemble.
 
-De plus, ce projet fut pour moi l’opportunité d’apprendre à utiliser Vue.js.
-C’est un concurrent sérieux de React.js et Angular auquel je m’intéressait depuis un moment.
-La connaissance de ce framework complémentaire vient compléter la connaissance faire en cours sur Angular.
+Sur les aspects **algorithmiques**, il a fallu concevoir des composants permettant la gestion de plusieurs parties ayant lieu simultanément.
+Chaque partie à sa propre liste de joueurs et sa propre machine à états.
+Une deuxième difficulté de ce chapitre fut la définition des événement et messages nécessaires à la synchronisation des différents clients jouant une même partie.
 
-Les parties les plus intéréssantes furent l'architecture et tous les problèmes algorithmiques que découlent de la gestion de multiples parties ayant lieu simultanément.
+Au sujet de l'**expérience utilisateur**, la problématique des parties multiples a été la plus difficile à présenter clairement à l'utilisateur. La solution retenue qui présente la liste des parties existantes tout en permettant d'en créer des nouvelles est une solution que je crois satisfaisante.
 
-Au sujet de la charge de travail, j'ai sous-estimé l'effort nécéssaire pour amener le projet à terme.
-Le projet était suffisament grand pour être partagé, et il aurait été plus raisonable de le faire à deux.
+Je suis assez content aussi du composant qui montre à l'utilisateur le progrès des différents joueurs de la partie. Cette information rend le jeu plus compétitif et donc plus intéressant.
 
-Pour résumer, ce projet a été intérlssant et ludique, permettant de mettre en pratique la théorie vue en vours.
+Sur le **design**, il a fallu faire des efforts pour rendre l'application web esthétiquement agréable.
+L'esthétique est un aspect qui passe souvent après la fonctionnalité, mais qui ne doit pas être oublié.
+
+
+Au sujet des technologies utilisées, ce projet fut pour moi l’opportunité d’apprendre à utiliser Vue.js.
+C’est un concurrent sérieux de React.js et Angular auquel je m’intéressai depuis un moment.
+Je suis très content d'avoir complété la connaissance apprise en cours sur Angular avec celle apprise en pratique sur Vue.js.
+
+Au sujet de la charge de travail, j'ai sous-estimé l'effort nécessaire pour amener le projet à terme.
+A posteriori, il est clair pour moi que le projet était suffisamment grand pour être partagé et il aurait été plus judicieux de le faire à deux.
+
+Pour résumer, ce projet a été intéressant et ludique, permettant de mettre en pratique la théorie vue en cours.
