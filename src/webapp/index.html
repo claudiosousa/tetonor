@@ -192,7 +192,61 @@
                     </waiting-players>
                 </div>
 
-                <div v-if="game.status == GAME_STATUS.PLAYING">
+                <div v-if="game.status == GAME_STATUS.PLAYING || game.status == GAME_STATUS.OVER">
+                    <div
+                        class="jumbotron jumbotron-fluid game-over"
+                        v-if="game.status == GAME_STATUS.OVER"
+                    >
+                        <game-over :game="game" :board="board" inline-template>
+                            <div class="container">
+                                <h1
+                                    v-if="game.winner"
+                                    class="display-4 text-success"
+                                >
+                                    You Won ! Congratulations !
+                                </h1>
+                                <h1
+                                    v-if="!game.winner"
+                                    class="display-4 text-danger"
+                                >
+                                    Oh no! You lost 😞
+                                </h1>
+                                <p class="lead text-center">Solution:</p>
+                                <p class="lead">
+                                    <div class="board">
+                                        <div class="problem-grid">
+                                            <div v-for="(problem, index) in game.solution"
+                                                class="problem SOLVED"
+                                            >
+                                                <div class="result">
+                                                    {{ problem.res }}
+                                                </div>
+                                                <div class="equation">
+                                                    <div class="equation-input">
+                                                        <span>{{board.choices[problem.inputA.index].val}}</span>
+                                                    </div>
+                                                    <div class="equation-operator">{{problem.operator}}</div>
+                                                    <div class="equation-input">
+                                                        <span>{{board.choices[problem.inputB.index].val}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p>
+                                <div class="text-center">
+                                    <button
+                                        type="button"
+                                        class="btn btn-primary"
+                                        @click="newGame()"
+                                    >
+                                        Play again
+                                    </button>
+                                </div>
+                            </div>
+                        </game-over>
+                    </div>
+                    <div class="game-cover"   v-if="game.status == GAME_STATUS.OVER"></div>
                     <tetonor inline-template :board="board" :game="game">
                         <div class="tetonor" :class="{dragging: dragging}">
                             <div class="board">
@@ -278,38 +332,6 @@
                             </div>
                         </div>
                     </tetonor>
-                </div>
-
-                <div
-                    class="jumbotron jumbotron-fluid"
-                    v-if="game.status == GAME_STATUS.OVER"
-                >
-                    <game-over :game="game" inline-template>
-                        <div class="container">
-                            <h1
-                                v-if="game.winner"
-                                class="display-4 text-success"
-                            >
-                                You Won ! Congratulations !
-                            </h1>
-                            <h1
-                                v-if="!game.winner"
-                                class="display-4 text-danger"
-                            >
-                                Oh no! You lost 😞
-                            </h1>
-                            <p class="lead text-center"></p>
-                            <div class="text-center">
-                                <button
-                                    type="button"
-                                    class="btn btn-primary"
-                                    @click="newGame()"
-                                >
-                                    Play again
-                                </button>
-                            </div>
-                        </div>
-                    </game-over>
                 </div>
 
                 <div

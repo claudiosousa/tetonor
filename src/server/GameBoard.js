@@ -24,7 +24,7 @@ class GameBoard {
         indices = [...indices, ...indices];
         this.shuffle(indices);
 
-        this.problems = indices
+        const board = indices
             .reduce((res, c) => {
                 if (res.length && res[res.length - 1].length < 2)
                     res[res.length - 1].push(c);
@@ -35,27 +35,27 @@ class GameBoard {
                 ...indices,
                 ...indices.map(i => this.choices[i].val),
                 Math.random() < 0.5 ? 'x' : '+'
-            ])
-            .map(([i, j, a, b, op]) => ({
-                res: op == '+' ? a + b : a * b,
-                inputA: {
-                    index: null
-                },
-                operator: '',
-                inputB: {
-                    index: null
-                }
-            }));
-        // .map(([i, j, a, b, op]) => ({
-        //     res: op == '+' ? a + b : a * b,
-        //     inputA: {
-        //         index: i
-        //     },
-        //     operator: op,
-        //     inputB: {
-        //         index: j
-        //     }
-        //}));
+            ]);
+        this.problems = board.map(([i, j, a, b, op]) => ({
+            res: op == '+' ? a + b : a * b,
+            inputA: {
+                index: null
+            },
+            operator: '',
+            inputB: {
+                index: null
+            }
+        }));
+        this.solution = board.map(([i, j, a, b, op]) => ({
+            res: op == '+' ? a + b : a * b,
+            inputA: {
+                index: i
+            },
+            operator: op,
+            inputB: {
+                index: j
+            }
+        }));
     }
 
     calculateScore(solution) {

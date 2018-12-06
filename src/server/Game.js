@@ -123,6 +123,8 @@ class Game {
      */
     getStatus(player) {
         return {
+            solution:
+                this.status == GAME_STATUS.OVER ? this.board.solution : null,
             status: this.status,
             winner: this.winner == player.ws,
             players: this.players.map(p => ({

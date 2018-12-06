@@ -47,6 +47,28 @@
     border: 1px solid #333;
 }
 
+.game-over .problem {
+    font-size: 12px;
+    grid-template-rows: 30px 20px;
+}
+
+.game-over .problem-grid {
+    width: 248px;
+}
+
+.game-over .equation {
+    grid-template-columns: 20px 20px 20px;
+    font-weight: 300;
+}
+.game-over .equation-input,
+.game-over .equation-operator {
+    cursor: initial;
+}
+
+.game-over .result {
+    font-size: 14px;
+}
+
 .problem.ERROR .result {
     color: red;
 }
@@ -138,4 +160,12 @@
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 100% 100%, auto;
+}
+
+.game-cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    grid-column: 2/3;
+    grid-row: 2/3;
 }

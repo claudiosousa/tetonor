@@ -4,7 +4,7 @@
 import { gameManager } from '../services/game-manager.js';
 
 export default {
-    props: ['game'],
+    props: ['game', 'board'],
     methods: {
         /** reload the webpage main view */
         newGame: () => gameManager.restart()
