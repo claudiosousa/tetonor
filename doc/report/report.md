@@ -206,7 +206,6 @@ Le diagramme ci-dessous, montre les principales échanges entre le client web et
 \label{game}
 \end{figure}
 
-
 # Architecture
 
 L’architecture est composée d’une application web et d’un serveur web.
@@ -262,7 +261,6 @@ Je suis assez content aussi du composant qui montre à l'utilisateur le progrès
 
 Sur le **design**, il a fallu faire des efforts pour rendre l'application web esthétiquement agréable.
 L'esthétique est un aspect qui passe souvent après la fonctionnalité, mais qui ne doit pas être oublié.
-
 
 Au sujet des technologies utilisées, ce projet fut pour moi l’opportunité d’apprendre à utiliser Vue.js.
 C’est un concurrent sérieux de React.js et Angular auquel je m’intéressai depuis un moment.
