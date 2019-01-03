@@ -32,7 +32,7 @@ header-includes: |
 numbersections: True
 output:
     pdf_document:
-        md_extensions: '+inline\_notes'
+        md_extensions: ’+inline\_notes’
 title: |
     | TETONOR
     | Un jeu web interactif multijoueur
@@ -244,29 +244,29 @@ Il utilise principalement les libraires Express[^express] et Express-ws[^express
 
 # Conclusion
 
-Ce projet a été pour moi l'opportunité de résoudre des problèmes dans les domaines de l'architecture, ingénierie logicielle,
-expérience utilisateur et design.
+Ce projet a été pour moi l’opportunité de résoudre des problèmes dans les domaines de l’architecture, l’ingénierie logicielle,
+l’expérience utilisateur et le design.
 
-Sur le plan **architectural**, j'ai pu créer une architecture qui permet au serveur de gérer plusieurs clients connectés
+Sur le plan **architectural**, j’ai pu créer une architecture qui permet au serveur de gérer plusieurs clients connectés
 simultanément, travaillant ensemble de manière structurée et cohérente.
-Les mécanismes de communication permettent au serveur de recevoir et envoyer de messages aux clients individuellement, mais aussi d'envoyer des messages à tous les clients ou à un sous-ensemble.
+Les mécanismes de communication permettent au serveur de recevoir et d’envoyer de messages aux clients individuellement, mais aussi d’envoyer des messages à tous les clients ou à un sous-ensemble.
 
 Sur les aspects **algorithmiques**, il a fallu concevoir des composants permettant la gestion de plusieurs parties ayant lieu simultanément.
 Chaque partie à sa propre liste de joueurs et sa propre machine à états.
-Une deuxième difficulté de ce chapitre fut la définition des événement et messages nécessaires à la synchronisation des différents clients jouant une même partie.
+Une deuxième difficulté de ce chapitre fut pour moi la définition des événements et messages nécessaires à la synchronisation des différents clients jouant une même partie.
 
-Au sujet de l'**expérience utilisateur**, la problématique des parties multiples a été la plus difficile à présenter clairement à l'utilisateur. La solution retenue qui présente la liste des parties existantes tout en permettant d'en créer des nouvelles est une solution que je crois satisfaisante.
+Au sujet de l’**expérience utilisateur**, la problématique des parties multiples a été la plus difficile à présenter clairement à l’utilisateur. La solution retenue qui présente la liste des parties existantes tout en permettant d’en créer des nouvelles est une solution que je crois satisfaisante.
 
-Je suis assez content aussi du composant qui montre à l'utilisateur le progrès des différents joueurs de la partie. Cette information rend le jeu plus compétitif et donc plus intéressant.
+Je suis également satisfait du composant qui montre à l’utilisateur le progrès des différents joueurs de la partie. Cette information rend le jeu plus compétitif et donc plus intéressant.
 
-Sur le **design**, il a fallu faire des efforts pour rendre l'application web esthétiquement agréable.
-L'esthétique est un aspect qui passe souvent après la fonctionnalité, mais qui ne doit pas être oublié.
+Concernant le **design**, il a fallu faire des efforts pour rendre l’application web esthétiquement agréable.
+L’esthétique est un aspect qui passe souvent après la fonctionnalité, mais qui ne doit pas être négligé.
 
 Au sujet des technologies utilisées, ce projet fut pour moi l’opportunité d’apprendre à utiliser Vue.js.
 C’est un concurrent sérieux de React.js et Angular auquel je m’intéressai depuis un moment.
-Je suis très content d'avoir complété la connaissance apprise en cours sur Angular avec celle apprise en pratique sur Vue.js.
+Je suis très content d’avoir pu compléter la connaissance apprise en cours sur Angular avec celle apprise en pratique sur Vue.js.
 
-Au sujet de la charge de travail, j'ai sous-estimé l'effort nécessaire pour amener le projet à terme.
+Au sujet de la charge de travail, j’ai sous-estimé l’effort nécessaire pour amener le projet à terme.
 A posteriori, il est clair pour moi que le projet était suffisamment grand pour être partagé et il aurait été plus judicieux de le faire à deux.
 
-Pour résumer, ce projet a été intéressant et ludique, permettant de mettre en pratique la théorie vue en cours.
+Pour résumer, ce projet a été à la fois intéressant et ludique grâce à la complémentarité de la théorie reçue en cours et la mise en pratique de cette dernière.
