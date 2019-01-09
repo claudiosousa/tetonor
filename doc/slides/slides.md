@@ -38,6 +38,18 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 -   Visualisation du score des joueurs en temps réel
 -   Communications
 
+#
+
+## Intérations 1/2
+
+![](img/Interactions_1.jpg){ height=550px }
+
+#
+
+## Intérations 2/2
+
+![](img/Interactions_2.jpg){ height=550px }
+
 # Nouveau jeu
 
 ![](../report/img/new_party.png)
@@ -59,18 +71,6 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 # Gameplay
 
 ![](../report/img/game.png)
-
-#
-
-## Intérations 1/2
-
-![](img/Interactions_1.jpg){ height=550px }
-
-#
-
-## Intérations 2/2
-
-![](img/Interactions_2.jpg){ height=550px }
 
 # Démo
 
