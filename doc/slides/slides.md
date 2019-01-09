@@ -21,19 +21,38 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 
 ![](img/technologies.png)
 
-# New game
+#
+
+## Gestion des parties
+
+-   Gestion de plusieurs parties simultanées
+-   Génération de jeux aléatoires
+-   Calcul de l'avancement des joueurs
+-   Machine à (_nombreux_) états
+
+#
+
+## Gestion des joueurs
+
+-   Synchronization des joueurs d'une partie
+-   Visualisation du score des joueurs en temps réel
+-   Communications
+
+# Nouveau jeu
 
 ![](../report/img/new_party.png)
 
-# Waiting players
+#
+
+## Attente de joueurs
 
 ![](../report/img/waiting_players.png)
 
-# List of games
+# Liste de jeux
 
 ![](../report/img/list_of_parties.png)
 
-# Game start
+# Début du jeu
 
 ![](../report/img/new_game.png)
 
@@ -41,9 +60,17 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 
 ![](../report/img/game.png)
 
-# Intérations
+#
 
-![](img/Interactions client-server.png){ height=550px }
+## Intérations 1/2
+
+![](img/Interactions_1.jpg){ height=550px }
+
+#
+
+## Intérations 2/2
+
+![](img/Interactions_2.jpg){ height=550px }
 
 # Démo
 
@@ -53,5 +80,12 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 
 Accès libre sur github:
 _https://github.com/claudiosousa/tetonor_
+
+# Conclusion
+
+-   Webapp client-serveur
+-   Tetonor multi-utilisateur
+-   Hautement intéractive
+-   Technos: Vue.js, websockets, node.js
 
 # Q&A
