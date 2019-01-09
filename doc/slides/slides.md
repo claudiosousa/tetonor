@@ -74,7 +74,7 @@ _"Tetonor est un jeu innovant qui permet de se divertir tout en améliorant ses 
 
 # Démo
 
-[http://u.nu/tetonor](http://u.nu/tetonor)
+[http://bit.do/tetonor](http://bit.do/tetonor)
 
 # Open source
 
